@@ -17,17 +17,11 @@ cat <<'EOF' > "$LAUNCHER_DIR/antigravity-launcher.sh"
 #!/bin/bash
 set -e
 
-# Check if running in WSL
-if ! grep -qi microsoft /proc/version 2>/dev/null && [ -z "$WSL_DISTRO_NAME" ]; then
+# Check if running in WSL and ensure WSL_DISTRO_NAME is set
+if ! grep -qi microsoft /proc/version 2>/dev/null || [ -z "$WSL_DISTRO_NAME" ]; then
   echo "Error: This script can only be executed in a WSL (Windows Subsystem for Linux) environment."
   echo "It will not run on native Ubuntu systems."
-  exit 1
-fi
-
-# Ensure WSL_DISTRO_NAME is set
-if [ -z "$WSL_DISTRO_NAME" ]; then
-  echo "Error: WSL_DISTRO_NAME environment variable is not set."
-  echo "This variable is required for WSL remote connections."
+  echo "Additionally, the WSL_DISTRO_NAME environment variable must be set."
   exit 1
 fi
 
