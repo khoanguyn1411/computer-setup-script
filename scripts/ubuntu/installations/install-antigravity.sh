@@ -17,6 +17,13 @@ cat <<'EOF' > "$LAUNCHER_DIR/antigravity-launcher.sh"
 #!/bin/bash
 set -e
 
+# Check if running in WSL
+if ! grep -qi microsoft /proc/version 2>/dev/null && [ -z "$WSL_DISTRO_NAME" ]; then
+  echo "Error: This script can only be executed in a WSL (Windows Subsystem for Linux) environment."
+  echo "It will not run on native Ubuntu systems."
+  exit 1
+fi
+
 if [ -z "$1" ]; then
   echo "Usage: ag-open <path>"
   exit 1
