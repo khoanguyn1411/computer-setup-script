@@ -2,6 +2,14 @@
 
 Automated development environment setup scripts for Ubuntu/WSL2. This repository contains modular installation scripts to quickly configure a complete development environment with Zsh, Node.js, Docker, and IDE launchers.
 
+## ✨ Features
+
+- 🎨 **Beautiful colored output** with progress indicators
+- 🔧 **Modular scripts** - run individually or all at once
+- 🤖 **Automatic configuration** - Zsh config applied automatically
+- 🔒 **Safe updates** - Creates backups before modifying files
+- 🪟 **WSL optimization** - Automatic WSL config tuning (WSL only)
+
 ## 📋 What Gets Installed
 
 - **Zsh & Oh My Zsh** - Modern shell with plugins (zsh-z, autosuggestions, syntax-highlighting)
@@ -9,6 +17,7 @@ Automated development environment setup scripts for Ubuntu/WSL2. This repository
 - **GitHub SSH Keys** - SSH key generation and GitHub configuration
 - **Docker** - Docker Engine, CLI, and Docker Compose plugin
 - **IDE Launchers** - Windsurf and Antigravity WSL remote launchers
+- **WSL Optimization** - Memory and processor configuration (WSL only)
 
 ## 🚀 Quick Start
 
@@ -79,6 +88,19 @@ bash ubuntu/installations/install-antigravity.sh
 
 Creates a launcher script for opening folders in Antigravity via WSL remote connection.
 
+### Update WSL Config (WSL Only)
+
+```bash
+bash ubuntu/installations/update-wslconfig.sh
+```
+
+Optimizes WSL performance by configuring:
+
+- Memory: 32GB
+- Processors: 12
+
+Automatically detects if running in WSL and skips on native Ubuntu. Creates a backup before modifying `.wslconfig`.
+
 ## ⚙️ Configuration Files
 
 ### `ubuntu/zsh-config.sh`
@@ -98,12 +120,18 @@ Contains launcher scripts:
 - `windsurf-launcher.sh` - Open folders in Windsurf
 - `antigravity-launcher.sh` - Open folders in Antigravity
 
+### `ubuntu/utils/`
+
+Utility scripts:
+
+- `colors.sh` - Color definitions and print functions for beautiful terminal output
+
 ## 📝 Post-Installation Steps
 
 After running the setup:
 
 1. **Log out and log back in** - Required for Zsh shell change and Docker group permissions
-2. **Verify Zsh configuration** - Open a new terminal and check if your aliases work
+2. **Verify Zsh configuration** - Configuration is automatically applied! Just open a new terminal
 3. **Add SSH key to GitHub**:
 
    ```bash
@@ -119,7 +147,16 @@ After running the setup:
    docker compose version
    ```
 
-5. **(Optional) Install Powerlevel10k theme**:
+5. **(WSL Only) Restart WSL** for config changes to take effect:
+
+   ```powershell
+   # Run in PowerShell
+   wsl --shutdown
+   ```
+
+   Then restart your WSL terminal
+
+6. **(Optional) Install Powerlevel10k theme**:
    ```bash
    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
    ```
