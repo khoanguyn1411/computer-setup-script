@@ -60,9 +60,19 @@ else
   print_info "Windsurf already installed"
 fi
 
-# Create desktop shortcut for Windsurf if installed
+### Install Antigravity
+print_step "Checking Antigravity installation..."
+if ! command -v antigravity &> /dev/null; then
+  print_warning "Antigravity installation requires manual download"
+  print_info "Please visit: https://antigravity.com/ to download"
+  print_info "Follow the installation instructions for your system"
+else
+  print_info "Antigravity already installed"
+fi
+
+# Create desktop shortcuts for native Ubuntu only (not WSL)
+print_step "Setting up desktop shortcuts..."
 if command -v windsurf &> /dev/null; then
-  print_step "Creating Windsurf desktop shortcut..."
   mkdir -p ~/.local/share/applications
   cat > ~/.local/share/applications/windsurf.desktop <<EOL
 [Desktop Entry]
@@ -77,17 +87,7 @@ EOL
   print_success "Windsurf desktop shortcut created"
 fi
 
-### Install Antigravity
-print_step "Checking Antigravity installation..."
-if ! command -v antigravity &> /dev/null; then
-  print_warning "Antigravity installation requires manual download"
-  print_info "Please visit: https://antigravity.com/ to download"
-  print_info "Follow the installation instructions for your system"
-else
-  print_info "Antigravity already installed"
-  
-  # Create desktop shortcut for Antigravity
-  print_step "Creating Antigravity desktop shortcut..."
+if command -v antigravity &> /dev/null; then
   mkdir -p ~/.local/share/applications
   cat > ~/.local/share/applications/antigravity.desktop <<EOL
 [Desktop Entry]
