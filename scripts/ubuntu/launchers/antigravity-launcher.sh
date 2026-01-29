@@ -7,6 +7,13 @@ if ! grep -qi microsoft /proc/version 2>/dev/null && [ -z "$WSL_DISTRO_NAME" ]; 
   exit 1
 fi
 
+# Ensure WSL_DISTRO_NAME is set
+if [ -z "$WSL_DISTRO_NAME" ]; then
+  echo "Error: WSL_DISTRO_NAME environment variable is not set."
+  echo "This variable is required for WSL remote connections."
+  exit 1
+fi
+
 ag() {
     local DISTRO=$WSL_DISTRO_NAME
     local AG_EXE=$(find /mnt/*/App/antigravity -name "antigravity" -type f -executable 2>/dev/null | head -n 1)
