@@ -167,6 +167,8 @@ else
         fi
         
         local target_path="${1:-.}"
+        # Launch in background with output redirected for cleaner terminal experience
+        # If you need to debug, remove '&> /dev/null' to see error messages
         windsurf "$target_path" &> /dev/null &
     }
     
@@ -177,6 +179,8 @@ else
         fi
         
         local target_path="${1:-.}"
+        # Launch in background with output redirected for cleaner terminal experience
+        # If you need to debug, remove '&> /dev/null' to see error messages
         antigravity "$target_path" &> /dev/null &
     }
 fi

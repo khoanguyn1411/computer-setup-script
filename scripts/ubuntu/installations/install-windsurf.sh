@@ -25,7 +25,17 @@ if ! command -v windsurf >/dev/null 2>&1; then
   exit 1
 fi
 
-CURRENT_PATH=$(readlink -f "$TARGET_PATH")
+# Validate WSL environment
+if [ -z "$WSL_DISTRO_NAME" ]; then
+  echo "Error: WSL_DISTRO_NAME is not set. This launcher is for WSL environments only."
+  exit 1
+fi
+
+# Resolve the absolute path
+if ! CURRENT_PATH=$(readlink -f "$TARGET_PATH" 2>/dev/null); then
+  echo "Error: Invalid path '$TARGET_PATH'"
+  exit 1
+fi
 
 DISTRO_NAME="$WSL_DISTRO_NAME"
 
@@ -39,4 +49,4 @@ cp "$LAUNCHER_DIR/windsurf-launcher.sh" ~/windsurf-launcher.sh
 chmod +x ~/windsurf-launcher.sh
 
 print_done "Windsurf launcher setup complete!"
-print_info "Use 'wf <path>' to open folders in Windsurf"
+print_info "Use 'wf [path]' to open folders in Windsurf (defaults to current directory)"
