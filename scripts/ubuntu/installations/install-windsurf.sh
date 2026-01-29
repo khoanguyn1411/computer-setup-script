@@ -19,9 +19,10 @@ set -e
 
 # Check if running in WSL and ensure WSL_DISTRO_NAME is set
 if ! grep -qi microsoft /proc/version 2>/dev/null || [ -z "$WSL_DISTRO_NAME" ]; then
-  echo "Error: This script can only be executed in a WSL (Windows Subsystem for Linux) environment."
-  echo "It will not run on native Ubuntu systems."
-  echo "Additionally, the WSL_DISTRO_NAME environment variable must be set."
+  echo "Error: This script requires a WSL (Windows Subsystem for Linux) environment."
+  echo "Requirements:"
+  echo "  1. Must be running in WSL (not native Ubuntu)"
+  echo "  2. WSL_DISTRO_NAME environment variable must be set"
   exit 1
 fi
 
