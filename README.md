@@ -85,6 +85,17 @@ initPython         # Create venv and install requirements
 av                 # Activate virtual environment
 ```
 
+### IDE Shortcuts (Ubuntu/WSL only)
+
+```bash
+wf [path]          # Open path in Windsurf (defaults to current directory)
+ag [path]          # Open path in Antigravity (defaults to current directory)
+```
+
+**Note:** These shortcuts automatically adapt based on your environment:
+- **Native Ubuntu**: Launches the IDE directly with the specified path
+- **WSL**: Opens the path using WSL remote connection features
+
 ### Homebrew (macOS only)
 
 ```bash
