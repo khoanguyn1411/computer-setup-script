@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
-echo "======================================"
-echo "  SETTING UP WINDSURF LAUNCHER"
-echo "======================================"
+# Load colors
+SCRIPT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")" 
+source "$SCRIPT_DIR/utils/colors.sh"
+
+print_header "SETTING UP WINDSURF LAUNCHER"
 
 ### Setup Windsurf
-echo ">> Installing WindSurf launcher..."
+print_step "Creating Windsurf launcher..."
 
 LAUNCHER_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")/launchers"
 mkdir -p "$LAUNCHER_DIR"
@@ -34,4 +36,5 @@ EOF
 
 chmod +x "$LAUNCHER_DIR/windsurf-launcher.sh"
 
-echo "✅ Windsurf launcher setup complete!"
+print_done "Windsurf launcher setup complete!"
+print_info "Use 'wf <path>' to open folders in Windsurf"

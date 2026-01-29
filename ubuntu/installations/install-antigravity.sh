@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
-echo "======================================"
-echo "  SETTING UP ANTIGRAVITY LAUNCHER"
-echo "======================================"
+# Load colors
+SCRIPT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")" 
+source "$SCRIPT_DIR/utils/colors.sh"
+
+print_header "SETTING UP ANTIGRAVITY LAUNCHER"
 
 ### Setup Antigravity
-echo ">> Installing Antigravity launcher..."
+print_step "Creating Antigravity launcher..."
 
 LAUNCHER_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")/launchers"
 mkdir -p "$LAUNCHER_DIR"
@@ -36,4 +38,5 @@ EOF
 
 chmod +x "$LAUNCHER_DIR/antigravity-launcher.sh"
 
-echo "✅ Antigravity launcher setup complete!"
+print_done "Antigravity launcher setup complete!"
+print_info "Use 'ag <path>' to open folders in Antigravity"
