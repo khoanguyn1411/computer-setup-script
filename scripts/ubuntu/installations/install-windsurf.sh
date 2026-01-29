@@ -44,5 +44,8 @@ EOF
 
 chmod +x "$LAUNCHER_DIR/windsurf-launcher.sh"
 
+# Copy launcher to home directory for easy access via aliases
+cp "$LAUNCHER_DIR/windsurf-launcher.sh" ~/windsurf-launcher.sh
+
 print_done "Windsurf launcher setup complete!"
 print_info "Use 'wf <path>' to open folders in Windsurf"

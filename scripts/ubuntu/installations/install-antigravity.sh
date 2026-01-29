@@ -46,5 +46,8 @@ EOF
 
 chmod +x "$LAUNCHER_DIR/antigravity-launcher.sh"
 
+# Copy launcher to home directory for easy access via aliases
+cp "$LAUNCHER_DIR/antigravity-launcher.sh" ~/antigravity-launcher.sh
+
 print_done "Antigravity launcher setup complete!"
 print_info "Use 'ag <path>' to open folders in Antigravity"
