@@ -153,8 +153,17 @@ function generatePersonalSshKey() {
 }
 
 # IDE
-alias wf="source ~/windsurf-launcher.sh"
-alias ag="source ~/antigravity-launcher.sh"
+# WSL uses launcher scripts to open IDEs with remote connection
+# Native Ubuntu uses direct commands
+if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
+  # WSL environment - use launcher scripts
+  alias wf="source ~/windsurf-launcher.sh"
+  alias ag="source ~/antigravity-launcher.sh"
+else
+  # Native Ubuntu - use direct commands
+  alias wf="windsurf"
+  alias ag="antigravity"
+fi
 
 # Node
 alias ns="npm start"

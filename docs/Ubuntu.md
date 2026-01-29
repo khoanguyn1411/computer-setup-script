@@ -16,8 +16,9 @@ Automated development environment setup for Ubuntu and WSL2.
 - **Node.js & NVM** - Node Version Manager with the latest Node.js, Yarn, and Angular CLI
 - **GitHub SSH Keys** - SSH key generation and GitHub configuration
 - **Docker** - Docker Engine, CLI, and Docker Compose plugin
-- **IDEs** - VS Code, Windsurf, Antigravity (native Ubuntu only)
-- **IDE Launchers** - Windsurf and Antigravity WSL remote launchers (WSL only)
+- **IDEs** - Installation differs based on environment:
+  - **Native Ubuntu:** VS Code, Windsurf, and Antigravity are installed with desktop shortcuts. Launch directly from application menu or terminal commands.
+  - **WSL:** IDEs should be installed on Windows side. Launcher scripts are configured to open folders with WSL remote connection.
 - **WSL Optimization** - Memory and processor configuration (WSL only)
 
 ## 🚀 Quick Start
@@ -79,9 +80,16 @@ Installs Docker Engine, Docker CLI, and Docker Compose plugin. Adds your user to
 bash scripts/ubuntu/installations/install-ide.sh
 ```
 
-Installs VS Code, Windsurf, and Antigravity on native Ubuntu.
+**Native Ubuntu:**
+- Installs VS Code, Windsurf, and Antigravity directly on your system
+- Creates desktop shortcuts in `~/.local/share/applications/`
+- Launch IDEs from application menu or use terminal commands: `code`, `windsurf`, `antigravity`
 
-**For WSL users:** This script will skip installation and provide download links for Windows. IDEs should be installed on the Windows side and accessed via WSL remote features.
+**WSL:**
+- Skips installation and provides download links for Windows
+- IDEs should be installed on the Windows side
+- Use WSL remote extensions/features to connect to your WSL environment
+- Launcher shortcuts (`wf`, `ag`) are configured automatically
 
 ### Setup Windsurf Launcher
 
@@ -89,7 +97,9 @@ Installs VS Code, Windsurf, and Antigravity on native Ubuntu.
 bash scripts/ubuntu/installations/install-windsurf.sh
 ```
 
-Creates a launcher script for opening folders in Windsurf via WSL remote connection.
+**WSL only:** Creates a launcher script for opening folders in Windsurf via WSL remote connection.
+
+**Native Ubuntu:** This script is skipped. Use the `windsurf` command directly instead.
 
 ### Setup Antigravity Launcher
 
@@ -97,7 +107,9 @@ Creates a launcher script for opening folders in Windsurf via WSL remote connect
 bash scripts/ubuntu/installations/install-antigravity.sh
 ```
 
-Creates a launcher script for opening folders in Antigravity via WSL remote connection.
+**WSL only:** Creates a launcher script for opening folders in Antigravity via WSL remote connection.
+
+**Native Ubuntu:** This script is skipped. Use the `antigravity` command directly instead.
 
 ### Update WSL Config (WSL Only)
 
@@ -211,7 +223,11 @@ Edit `scripts/ubuntu/zsh-config.sh` with your preferences before running the ins
 ### IDE Launchers
 
 - `wf <path>` - Open path in Windsurf
+  - **WSL:** Opens folder with WSL remote connection
+  - **Native Ubuntu:** Opens Windsurf directly
 - `ag <path>` - Open path in Antigravity
+  - **WSL:** Opens folder with WSL remote connection
+  - **Native Ubuntu:** Opens Antigravity directly
 
 ## 🐛 Troubleshooting
 

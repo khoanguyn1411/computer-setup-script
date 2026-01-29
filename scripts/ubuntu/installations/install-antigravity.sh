@@ -7,6 +7,14 @@ source "$SCRIPT_DIR/utils/colors.sh"
 
 print_header "SETTING UP ANTIGRAVITY LAUNCHER"
 
+# Check if running in WSL
+if ! grep -qi microsoft /proc/version 2>/dev/null && [ -z "$WSL_DISTRO_NAME" ]; then
+  print_warning "This launcher is only needed for WSL environments"
+  print_info "On native Ubuntu, use the 'antigravity' command directly"
+  print_info "Desktop shortcuts are created by install-ide.sh"
+  exit 0
+fi
+
 ### Setup Antigravity
 print_step "Creating Antigravity launcher..."
 

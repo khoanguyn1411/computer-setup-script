@@ -50,8 +50,9 @@ bash setup.sh
 - Node.js & NVM
 - GitHub SSH Keys
 - Docker Engine
-- IDE Launchers (Windsurf, Antigravity)
-- WSL Performance Optimization
+- **Native Ubuntu:** IDEs (VS Code, Windsurf, Antigravity) with desktop shortcuts
+- **WSL:** IDE Launchers (Windsurf, Antigravity) for WSL remote connection
+- WSL Performance Optimization (WSL only)
 
 ### macOS
 

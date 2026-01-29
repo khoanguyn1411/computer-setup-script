@@ -60,6 +60,21 @@ else
   print_info "Windsurf already installed"
 fi
 
+# Create desktop shortcut for Windsurf
+print_step "Creating Windsurf desktop shortcut..."
+mkdir -p ~/.local/share/applications
+cat > ~/.local/share/applications/windsurf.desktop <<EOL
+[Desktop Entry]
+Name=Windsurf
+Comment=Windsurf Editor
+Exec=windsurf %F
+Icon=windsurf
+Type=Application
+Categories=Development;IDE;
+MimeType=text/plain;inode/directory;
+EOL
+print_success "Windsurf desktop shortcut created"
+
 ### Install Antigravity
 print_step "Checking Antigravity installation..."
 if ! command -v antigravity &> /dev/null; then
@@ -68,6 +83,21 @@ if ! command -v antigravity &> /dev/null; then
   print_info "Follow the installation instructions for your system"
 else
   print_info "Antigravity already installed"
+  
+  # Create desktop shortcut for Antigravity
+  print_step "Creating Antigravity desktop shortcut..."
+  mkdir -p ~/.local/share/applications
+  cat > ~/.local/share/applications/antigravity.desktop <<EOL
+[Desktop Entry]
+Name=Antigravity
+Comment=Antigravity Editor
+Exec=antigravity %F
+Icon=antigravity
+Type=Application
+Categories=Development;IDE;
+MimeType=text/plain;inode/directory;
+EOL
+  print_success "Antigravity desktop shortcut created"
 fi
 
 print_done "IDE installation complete!"
