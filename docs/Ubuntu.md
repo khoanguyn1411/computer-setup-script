@@ -31,7 +31,7 @@ Automated development environment setup for Ubuntu and WSL2.
 ### Run Full Setup
 
 ```bash
-cd ubuntu
+cd scripts/ubuntu
 bash setup.sh
 ```
 
@@ -44,7 +44,7 @@ You can also run individual installation scripts independently:
 ### Install Zsh & Oh My Zsh
 
 ```bash
-bash ubuntu/installations/install-zsh.sh
+bash scripts/ubuntu/installations/install-zsh.sh
 ```
 
 Installs Zsh, Oh My Zsh, plugins, and applies your custom Zsh configuration from `zsh-config.sh`.
@@ -52,7 +52,7 @@ Installs Zsh, Oh My Zsh, plugins, and applies your custom Zsh configuration from
 ### Install Node.js & NVM
 
 ```bash
-bash ubuntu/installations/install-node.sh
+bash scripts/ubuntu/installations/install-node.sh
 ```
 
 Installs NVM, the latest Node.js, Yarn, and Angular CLI.
@@ -60,7 +60,7 @@ Installs NVM, the latest Node.js, Yarn, and Angular CLI.
 ### Setup GitHub SSH
 
 ```bash
-bash ubuntu/installations/install-github-ssh.sh
+bash scripts/ubuntu/installations/install-github-ssh.sh
 ```
 
 Generates SSH keys for GitHub and configures SSH config. Your public key will be displayed at the end.
@@ -68,7 +68,7 @@ Generates SSH keys for GitHub and configures SSH config. Your public key will be
 ### Install Docker
 
 ```bash
-bash ubuntu/installations/install-docker.sh
+bash scripts/ubuntu/installations/install-docker.sh
 ```
 
 Installs Docker Engine, Docker CLI, and Docker Compose plugin. Adds your user to the docker group.
@@ -76,7 +76,7 @@ Installs Docker Engine, Docker CLI, and Docker Compose plugin. Adds your user to
 ### Install IDEs (VSCode, Windsurf, Antigravity)
 
 ```bash
-bash ubuntu/installations/install-ide.sh
+bash scripts/ubuntu/installations/install-ide.sh
 ```
 
 Installs VS Code, Windsurf, and Antigravity on native Ubuntu.
@@ -86,7 +86,7 @@ Installs VS Code, Windsurf, and Antigravity on native Ubuntu.
 ### Setup Windsurf Launcher
 
 ```bash
-bash ubuntu/installations/install-windsurf.sh
+bash scripts/ubuntu/installations/install-windsurf.sh
 ```
 
 Creates a launcher script for opening folders in Windsurf via WSL remote connection.
@@ -94,7 +94,7 @@ Creates a launcher script for opening folders in Windsurf via WSL remote connect
 ### Setup Antigravity Launcher
 
 ```bash
-bash ubuntu/installations/install-antigravity.sh
+bash scripts/ubuntu/installations/install-antigravity.sh
 ```
 
 Creates a launcher script for opening folders in Antigravity via WSL remote connection.
@@ -102,7 +102,7 @@ Creates a launcher script for opening folders in Antigravity via WSL remote conn
 ### Update WSL Config (WSL Only)
 
 ```bash
-bash ubuntu/installations/update-wslconfig.sh
+bash scripts/ubuntu/installations/update-wslconfig.sh
 ```
 
 Optimizes WSL performance by configuring:
@@ -114,7 +114,7 @@ Automatically detects if running in WSL and skips on native Ubuntu. Creates a ba
 
 ## ⚙️ Configuration Files
 
-### `ubuntu/zsh-config.sh`
+### `scripts/ubuntu/zsh-config.sh`
 
 Your custom Zsh configuration with:
 
@@ -124,14 +124,14 @@ Your custom Zsh configuration with:
 
 This file is automatically copied to `~/.zshrc` during Zsh installation.
 
-### `ubuntu/launchers/`
+### `scripts/ubuntu/launchers/`
 
 Contains launcher scripts for WSL:
 
 - `windsurf-launcher.sh` - Open folders in Windsurf via WSL remote
 - `antigravity-launcher.sh` - Open folders in Antigravity via WSL remote
 
-### `ubuntu/utils/`
+### `scripts/ubuntu/utils/`
 
 Utility scripts:
 
@@ -179,13 +179,13 @@ After running the setup:
 
 ### Modify Zsh Configuration
 
-Edit `ubuntu/zsh-config.sh` with your preferences before running the installation, or modify `~/.zshrc` after installation.
+Edit `scripts/ubuntu/zsh-config.sh` with your preferences before running the installation, or modify `~/.zshrc` after installation.
 
 ### Add More Installation Steps
 
-1. Create a new script in `ubuntu/installations/`
+1. Create a new script in `scripts/ubuntu/installations/`
 2. Follow the naming pattern: `install-<component>.sh`
-3. Add the script call to `ubuntu/setup.sh`
+3. Add the script call to `scripts/ubuntu/setup.sh`
 
 ## 🔧 Useful Commands (from Zsh config)
 

@@ -23,7 +23,7 @@ Choose your platform for detailed setup instructions:
 ### Ubuntu/WSL2
 
 ```bash
-cd ubuntu
+cd scripts/ubuntu
 bash setup.sh
 ```
 
@@ -34,7 +34,7 @@ bash setup.sh
 ### macOS
 
 ```bash
-cd macOS
+cd scripts/macOS
 bash setup.sh
 ```
 
@@ -95,17 +95,18 @@ brewup             # Update, upgrade, and cleanup
 
 ```
 .
-├── ubuntu/                    # Ubuntu/WSL2 setup
-│   ├── setup.sh              # Main setup script
-│   ├── zsh-config.sh         # Zsh configuration
-│   ├── installations/        # Individual install scripts
-│   ├── launchers/            # WSL launcher scripts
-│   └── utils/                # Utility scripts (colors)
-├── macOS/                    # macOS setup
-│   ├── setup.sh              # Main setup script
-│   ├── zsh-config.sh         # Zsh configuration
-│   ├── installations/        # Individual install scripts
-│   └── utils/                # Utility scripts (colors)
+├── scripts/                  # Platform-specific setup scripts
+│   ├── ubuntu/               # Ubuntu/WSL2 setup
+│   │   ├── setup.sh          # Main setup script
+│   │   ├── zsh-config.sh     # Zsh configuration
+│   │   ├── installations/    # Individual install scripts
+│   │   ├── launchers/        # WSL launcher scripts
+│   │   └── utils/            # Utility scripts (colors)
+│   └── macOS/                # macOS setup
+│       ├── setup.sh          # Main setup script
+│       ├── zsh-config.sh     # Zsh configuration
+│       ├── installations/    # Individual install scripts
+│       └── utils/            # Utility scripts (colors)
 └── docs/                     # Documentation
     ├── Ubuntu.md             # Ubuntu/WSL2 guide
     └── MacOS.md              # macOS guide
@@ -115,7 +116,7 @@ brewup             # Update, upgrade, and cleanup
 
 Both Ubuntu and macOS setups are fully customizable:
 
-1. **Modify Zsh config** - Edit `ubuntu/zsh-config.sh` or `macOS/zsh-config.sh`
+1. **Modify Zsh config** - Edit `scripts/ubuntu/zsh-config.sh` or `scripts/macOS/zsh-config.sh`
 2. **Add new scripts** - Create scripts in `installations/` folder
 3. **Adjust settings** - Modify individual installation scripts
 

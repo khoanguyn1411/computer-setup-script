@@ -29,7 +29,7 @@ Automated development environment setup for macOS.
 ### Run Full Setup
 
 ```bash
-cd macOS
+cd scripts/macOS
 bash setup.sh
 ```
 
@@ -42,7 +42,7 @@ You can also run individual installation scripts independently:
 ### Install Homebrew
 
 ```bash
-bash macOS/installations/install-homebrew.sh
+bash scripts/macOS/installations/install-homebrew.sh
 ```
 
 Installs Homebrew package manager for macOS. Automatically handles Apple Silicon (M1/M2/M3) configuration.
@@ -50,7 +50,7 @@ Installs Homebrew package manager for macOS. Automatically handles Apple Silicon
 ### Install Zsh & Oh My Zsh
 
 ```bash
-bash macOS/installations/install-zsh.sh
+bash scripts/macOS/installations/install-zsh.sh
 ```
 
 Installs Zsh, Oh My Zsh, plugins, and applies your custom Zsh configuration from `zsh-config.sh`.
@@ -58,7 +58,7 @@ Installs Zsh, Oh My Zsh, plugins, and applies your custom Zsh configuration from
 ### Install Node.js & NVM
 
 ```bash
-bash macOS/installations/install-node.sh
+bash scripts/macOS/installations/install-node.sh
 ```
 
 Installs NVM, the latest Node.js, Yarn, and Angular CLI.
@@ -66,7 +66,7 @@ Installs NVM, the latest Node.js, Yarn, and Angular CLI.
 ### Setup GitHub SSH
 
 ```bash
-bash macOS/installations/install-github-ssh.sh
+bash scripts/macOS/installations/install-github-ssh.sh
 ```
 
 Generates SSH keys for GitHub and configures SSH config. Your public key will be displayed at the end.
@@ -74,14 +74,14 @@ Generates SSH keys for GitHub and configures SSH config. Your public key will be
 ### Install Docker Desktop
 
 ```bash
-bash macOS/installations/install-docker.sh
+bash scripts/macOS/installations/install-docker.sh
 ```
 
 Installs Docker Desktop for Mac via Homebrew. Requires manual startup from Applications.
 
 ## ⚙️ Configuration Files
 
-### `macOS/zsh-config.sh`
+### `scripts/macOS/zsh-config.sh`
 
 Your custom Zsh configuration with:
 
@@ -92,7 +92,7 @@ Your custom Zsh configuration with:
 
 This file is automatically copied to `~/.zshrc` during Zsh installation.
 
-### `macOS/utils/`
+### `scripts/macOS/utils/`
 
 Utility scripts:
 
@@ -133,13 +133,13 @@ After running the setup:
 
 ### Modify Zsh Configuration
 
-Edit `macOS/zsh-config.sh` with your preferences before running the installation, or modify `~/.zshrc` after installation.
+Edit `scripts/macOS/zsh-config.sh` with your preferences before running the installation, or modify `~/.zshrc` after installation.
 
 ### Add More Installation Steps
 
-1. Create a new script in `macOS/installations/`
+1. Create a new script in `scripts/macOS/installations/`
 2. Follow the naming pattern: `install-<component>.sh`
-3. Add the script call to `macOS/setup.sh`
+3. Add the script call to `scripts/macOS/setup.sh`
 
 ## 🔧 Useful Commands (from Zsh config)
 
