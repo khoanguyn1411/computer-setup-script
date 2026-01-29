@@ -17,17 +17,15 @@ cat <<'EOF' > "$LAUNCHER_DIR/windsurf-launcher.sh"
 #!/bin/bash
 set -e
 
-if [ -z "$1" ]; then
-  echo "Usage: windsurf-open <path>"
-  exit 1
-fi
+# Default to current directory if no path provided
+TARGET_PATH="${1:-.}"
 
 if ! command -v windsurf >/dev/null 2>&1; then
   echo "Error: windsurf is not installed"
   exit 1
 fi
 
-CURRENT_PATH=$(readlink -f "$1")
+CURRENT_PATH=$(readlink -f "$TARGET_PATH")
 
 DISTRO_NAME="$WSL_DISTRO_NAME"
 
@@ -35,6 +33,10 @@ windsurf --folder-uri "vscode-remote://wsl+${DISTRO_NAME}${CURRENT_PATH}"
 EOF
 
 chmod +x "$LAUNCHER_DIR/windsurf-launcher.sh"
+
+# Copy launcher to home directory for easy access
+cp "$LAUNCHER_DIR/windsurf-launcher.sh" ~/windsurf-launcher.sh
+chmod +x ~/windsurf-launcher.sh
 
 print_done "Windsurf launcher setup complete!"
 print_info "Use 'wf <path>' to open folders in Windsurf"

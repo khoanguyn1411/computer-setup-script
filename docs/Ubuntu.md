@@ -232,7 +232,7 @@ The `wf` and `ag` shortcuts are automatically configured during the Zsh installa
 
 #### Setup Instructions
 
-The shortcuts are automatically configured in your `~/.zshrc` when you run the setup script. They are also available in `.bashrc` if you use Bash.
+The shortcuts are automatically configured in your `~/.zshrc` when you run the setup script.
 
 **For Bash users**, if you want to manually add these shortcuts to your `.bashrc`:
 
