@@ -3,7 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
-source "$SCRIPT_DIR/../../shared/colors.sh"
+source "$SCRIPT_DIR/../shared/colors.sh"
 
 print_header "INSTALLING HOMEBREW"
 

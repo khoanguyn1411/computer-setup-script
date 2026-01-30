@@ -3,7 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
-source "$SCRIPT_DIR/../../shared/colors.sh"
+source "$SCRIPT_DIR/../shared/colors.sh"
 
 print_header "INSTALLING OH MY ZSH"
 
@@ -37,7 +37,7 @@ print_success "Plugins installed (zsh-z, autosuggestions, syntax-highlighting)"
 ### Apply Zsh configuration
 print_step "Applying Zsh configuration..."
 
-SHARED_CONFIG_FILE="$SCRIPT_DIR/../../shared/zsh-config.sh"
+SHARED_CONFIG_FILE="$SCRIPT_DIR/../shared/zsh-config.sh"
 OS_CONFIG_FILE="$SCRIPT_DIR/zsh-config.sh"
 
 if [ -f "$SHARED_CONFIG_FILE" ] && [ -f "$OS_CONFIG_FILE" ]; then
