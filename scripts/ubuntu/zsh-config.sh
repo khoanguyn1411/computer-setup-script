@@ -1,6 +1,3 @@
-# Load shared zsh configuration
-source "$HOME/.zshrc-shared"
-
 # Ubuntu specific configurations
 
 # IDE

@@ -3,9 +3,6 @@ if [[ $(uname -m) == 'arm64' ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Load shared zsh configuration
-source "$HOME/.zshrc-shared"
-
 # macOS specific configurations
 
 # IDE
