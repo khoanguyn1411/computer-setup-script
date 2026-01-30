@@ -111,15 +111,18 @@ brewup             # Update, upgrade, and cleanup
 │   ├── ubuntu/               # Ubuntu/WSL2 setup
 │   │   ├── setup.sh          # Main setup script
 │   │   ├── zsh-config.sh     # Ubuntu-specific Zsh config
-│   │   ├── installations/    # Individual install scripts
+│   │   ├── installations/    # OS-specific install scripts
 │   │   └── launchers/        # WSL launcher scripts
 │   └── macOS/                # macOS setup
 │       ├── setup.sh          # Main setup script
 │       ├── zsh-config.sh     # macOS-specific Zsh config
-│       └── installations/    # Individual install scripts
-├── shared/                   # Shared configurations
+│       └── installations/    # OS-specific install scripts
+├── shared/                   # Shared configurations & scripts
 │   ├── zsh-config.sh         # Common Zsh configuration
-│   └── colors.sh             # Shared color utilities
+│   ├── colors.sh             # Shared color utilities
+│   └── unix-base-installation/  # Common installation scripts
+│       ├── install-github-ssh.sh  # GitHub SSH setup
+│       └── install-node.sh   # Node.js/NVM setup
 └── docs/                     # Documentation
     ├── Ubuntu.md             # Ubuntu/WSL2 guide
     └── MacOS.md              # macOS guide
@@ -131,8 +134,9 @@ Both Ubuntu and macOS setups are fully customizable:
 
 1. **Modify shared Zsh config** - Edit `shared/zsh-config.sh` for common aliases and functions
 2. **Modify OS-specific config** - Edit `scripts/ubuntu/zsh-config.sh` or `scripts/macOS/zsh-config.sh` for OS-specific settings
-3. **Add new scripts** - Create scripts in `installations/` folder
-4. **Adjust settings** - Modify individual installation scripts
+3. **Modify shared installations** - Edit scripts in `shared/unix-base-installation/` to change common installation logic
+4. **Add new scripts** - Create scripts in OS-specific `installations/` folders
+5. **Adjust settings** - Modify individual installation scripts
 
 See platform-specific documentation for details:
 
