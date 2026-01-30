@@ -26,8 +26,12 @@ print_success "Zsh installed"
 
 if [ "$SHELL" != "$(which zsh)" ]; then
   print_step "Setting Zsh as default shell..."
-  chsh -s "$(which zsh)"
-  print_success "Zsh set as default shell"
+  if sudo chsh -s "$(which zsh)" "$USER" 2>/dev/null; then
+    print_success "Zsh set as default shell"
+  else
+    print_warning "Could not set Zsh as default shell (may require logout/login)"
+    print_info "You can manually set it later with: chsh -s \$(which zsh)"
+  fi
 fi
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
