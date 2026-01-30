@@ -210,8 +210,72 @@ Edit `scripts/ubuntu/zsh-config.sh` with your preferences before running the ins
 
 ### IDE Launchers
 
-- `wf <path>` - Open path in Windsurf
-- `ag <path>` - Open path in Antigravity
+#### Quick Reference
+
+- `wf [path]` - Open path in Windsurf (defaults to current directory if no path provided)
+- `ag [path]` - Open path in Antigravity (defaults to current directory if no path provided)
+
+#### How IDE Shortcuts Work
+
+The `wf` and `ag` shortcuts are automatically configured during the Zsh installation and adapt based on your environment:
+
+**On Native Ubuntu:**
+- Launches the IDE application directly with the specified path
+- Works similarly to how `code` opens Visual Studio Code
+- Example: `wf .` opens Windsurf in the current directory
+- Example: `ag ~/projects/myapp` opens Antigravity with that specific folder
+
+**On WSL:**
+- Uses WSL remote connection features to open folders from WSL in Windows-installed IDEs
+- Automatically detects the WSL distribution name
+- Opens the IDE with proper remote connection URI
+
+#### Setup Instructions
+
+The shortcuts are automatically configured in your `~/.zshrc` when you run the setup script.
+
+**For Bash users**, if you want to manually add these shortcuts to your `.bashrc`:
+
+1. Open your `.bashrc` file:
+   ```bash
+   nano ~/.bashrc
+   ```
+
+2. Add the following at the end:
+   ```bash
+   # IDE shortcuts
+   if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
+       # WSL: Use launcher scripts
+       alias wf="source ~/windsurf-launcher.sh"
+       alias ag="source ~/antigravity-launcher.sh"
+   else
+       # Native Ubuntu: Launch applications directly
+       function wf() {
+           if ! command -v windsurf &> /dev/null; then
+               echo "Error: windsurf is not installed"
+               return 1
+           fi
+           local target_path="${1:-.}"
+           windsurf "$target_path" &> /dev/null &
+       }
+       
+       function ag() {
+           if ! command -v antigravity &> /dev/null; then
+               echo "Error: antigravity is not installed"
+               return 1
+           fi
+           local target_path="${1:-.}"
+           antigravity "$target_path" &> /dev/null &
+       }
+   fi
+   ```
+
+3. Reload your configuration:
+   ```bash
+   source ~/.bashrc
+   ```
+
+**Note:** Zsh users get these shortcuts automatically configured during setup. No manual configuration needed!
 
 ## 🐛 Troubleshooting
 
