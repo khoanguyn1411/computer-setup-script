@@ -1,0 +1,119 @@
+name: Test macOS Setup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/macOS/**"
+      - "shared/**"
+      - ".github/workflows/test-macos.yml"
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-macos-setup:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display macOS version
+        run: |
+          sw_vers
+          echo "Shell: $SHELL"
+
+      - name: Test script syntax
+        run: |
+          echo "🔍 Checking script syntax..."
+          bash -n scripts/macOS/setup.sh
+          bash -n scripts/macOS/installations/*.sh
+          bash -n shared/unix-base-installation/*.sh
+          echo "✅ All scripts have valid syntax"
+
+      - name: Run macOS setup
+        run: |
+          cd scripts/macOS
+          bash setup.sh
+
+      - name: Verify installations
+        run: |
+          echo "🔍 Verifying installations..."
+
+          # Check Homebrew
+          if command -v brew &> /dev/null; then
+            echo "✅ Homebrew installed: $(brew --version | head -n1)"
+          else
+            echo "❌ Homebrew not found"
+            exit 1
+          fi
+
+          # Check Zsh and Oh My Zsh
+          if command -v zsh &> /dev/null; then
+            echo "✅ Zsh installed: $(zsh --version)"
+          else
+            echo "❌ Zsh not found"
+            exit 1
+          fi
+
+          if [ -d "$HOME/.oh-my-zsh" ]; then
+            echo "✅ Oh My Zsh installed"
+          else
+            echo "❌ Oh My Zsh not found"
+            exit 1
+          fi
+
+          # Check NVM and Node
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+          if command -v nvm &> /dev/null; then
+            echo "✅ NVM installed: $(nvm --version)"
+          else
+            echo "❌ NVM not found"
+            exit 1
+          fi
+
+          if command -v node &> /dev/null; then
+            echo "✅ Node.js installed: $(node --version)"
+          else
+            echo "❌ Node.js not found"
+            exit 1
+          fi
+
+          if command -v yarn &> /dev/null; then
+            echo "✅ Yarn installed: $(yarn --version)"
+          else
+            echo "❌ Yarn not found"
+            exit 1
+          fi
+
+          # Check SSH key
+          if [ -f "$HOME/.ssh/personal" ]; then
+            echo "✅ SSH key generated"
+          else
+            echo "❌ SSH key not found"
+            exit 1
+          fi
+
+          # Check .zshrc
+          if [ -f "$HOME/.zshrc" ]; then
+            echo "✅ .zshrc created"
+          else
+            echo "❌ .zshrc not found"
+            exit 1
+          fi
+
+          echo ""
+          echo "🎉 All verifications passed!"
+
+      - name: Test Zsh configuration
+        shell: zsh {0}
+        run: |
+          source ~/.zshrc
+          echo "✅ Zsh configuration loaded successfully"
+
+          # Test some aliases exist
+          alias gc &> /dev/null && echo "✅ Git aliases loaded" || echo "❌ Git aliases missing"
+          alias ns &> /dev/null && echo "✅ Node aliases loaded" || echo "❌ Node aliases missing"
