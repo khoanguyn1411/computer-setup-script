@@ -24,13 +24,24 @@ jobs:
         with:
           distribution: Ubuntu-22.04
 
+      - name: Copy repository to WSL
+        shell: wsl-bash {0}
+        run: |
+          # Copy from Windows path to WSL filesystem
+          WSL_WORKSPACE="/home/$(whoami)/workspace"
+          mkdir -p "$WSL_WORKSPACE"
+          cp -r "${GITHUB_WORKSPACE}" "$WSL_WORKSPACE/computer-setup-script"
+          echo "Repository copied to: $WSL_WORKSPACE/computer-setup-script"
+          ls -la "$WSL_WORKSPACE/computer-setup-script"
+
       - name: Display WSL info
         shell: wsl-bash {0}
         run: |
+          WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
+          cd "$WSL_WORKSPACE"
           lsb_release -a
           echo "Shell: $SHELL"
           echo "Current directory: $(pwd)"
-          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
           echo "Listing current directory:"
           ls -la
           # Check if running in WSL
@@ -43,7 +54,8 @@ jobs:
       - name: Test script syntax
         shell: wsl-bash {0}
         run: |
-          cd "${GITHUB_WORKSPACE}"
+          WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
+          cd "$WSL_WORKSPACE"
           echo "Working in: $(pwd)"
           echo "🔍 Checking script syntax..."
           bash -n scripts/ubuntu/setup.sh
@@ -54,13 +66,15 @@ jobs:
       - name: Run WSL setup
         shell: wsl-bash {0}
         run: |
-          cd "${GITHUB_WORKSPACE}/scripts/ubuntu"
+          WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
+          cd "$WSL_WORKSPACE/scripts/ubuntu"
           bash setup.sh
 
       - name: Verify installations
         shell: wsl-bash {0}
         run: |
-          cd "${GITHUB_WORKSPACE}"
+          WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
+          cd "$WSL_WORKSPACE"
           echo "🔍 Verifying installations..."
 
           # Check Zsh and Oh My Zsh
@@ -148,7 +162,8 @@ jobs:
       - name: Display .zshrc contents
         shell: wsl-bash {0}
         run: |
-          cd "${GITHUB_WORKSPACE}"
+          WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
+          cd "$WSL_WORKSPACE"
           echo "📄 Contents of ~/.zshrc:"
           echo "====================================="
           cat ~/.zshrc
@@ -157,7 +172,8 @@ jobs:
       - name: Test Zsh configuration
         shell: wsl-bash {0}
         run: |
-          cd "${GITHUB_WORKSPACE}"
+          WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
+          cd "$WSL_WORKSPACE"
           source ~/.zshrc
           echo "✅ Zsh configuration loaded successfully"
 
