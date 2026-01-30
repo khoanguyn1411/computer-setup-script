@@ -44,13 +44,22 @@ print_success "Plugins installed (zsh-z, autosuggestions, syntax-highlighting)"
 ### Apply Zsh configuration
 print_step "Applying Zsh configuration..."
 
-ZSH_CONFIG_FILE="$SCRIPT_DIR/zsh-config.sh"
+SHARED_CONFIG_FILE="$SCRIPT_DIR/../../shared/zsh-config.sh"
+OS_CONFIG_FILE="$SCRIPT_DIR/zsh-config.sh"
 
-if [ -f "$ZSH_CONFIG_FILE" ]; then
-  cp "$ZSH_CONFIG_FILE" "$HOME/.zshrc"
-  print_success "Configuration applied from zsh-config.sh"
+if [ -f "$SHARED_CONFIG_FILE" ] && [ -f "$OS_CONFIG_FILE" ]; then
+  # Combine shared and OS-specific configs into single .zshrc
+  cat "$SHARED_CONFIG_FILE" > "$HOME/.zshrc"
+  echo "" >> "$HOME/.zshrc"
+  echo "# Ubuntu specific configurations" >> "$HOME/.zshrc"
+  # Skip the "Load shared" section from OS config and append the rest
+  tail -n +3 "$OS_CONFIG_FILE" >> "$HOME/.zshrc"
+  print_success "Configuration applied (shared + Ubuntu-specific)"
+elif [ -f "$SHARED_CONFIG_FILE" ]; then
+  cp "$SHARED_CONFIG_FILE" "$HOME/.zshrc"
+  print_success "Shared configuration applied"
 else
-  print_warning "zsh-config.sh not found at $ZSH_CONFIG_FILE"
+  print_warning "Configuration files not found"
   print_warning "Skipping configuration copy"
 fi
 

@@ -33,13 +33,25 @@ print_success "Plugins installed (zsh-z, autosuggestions, syntax-highlighting)"
 ### Apply Zsh configuration
 print_step "Applying Zsh configuration..."
 
-ZSH_CONFIG_FILE="$SCRIPT_DIR/macOS/zsh-config.sh"
+SHARED_CONFIG_FILE="$SCRIPT_DIR/../../shared/zsh-config.sh"
+OS_CONFIG_FILE="$SCRIPT_DIR/macOS/zsh-config.sh"
 
-if [ -f "$ZSH_CONFIG_FILE" ]; then
-  cp "$ZSH_CONFIG_FILE" "$HOME/.zshrc"
-  print_success "Configuration applied from zsh-config.sh"
+if [ -f "$SHARED_CONFIG_FILE" ] && [ -f "$OS_CONFIG_FILE" ]; then
+  # Start with Homebrew initialization from macOS config
+  head -n 4 "$OS_CONFIG_FILE" > "$HOME/.zshrc"
+  echo "" >> "$HOME/.zshrc"
+  # Add shared config
+  cat "$SHARED_CONFIG_FILE" >> "$HOME/.zshrc"
+  echo "" >> "$HOME/.zshrc"
+  echo "# macOS specific configurations" >> "$HOME/.zshrc"
+  # Skip the Homebrew and "Load shared" sections, append the rest
+  tail -n +6 "$OS_CONFIG_FILE" | tail -n +3 >> "$HOME/.zshrc"
+  print_success "Configuration applied (Homebrew + shared + macOS-specific)"
+elif [ -f "$SHARED_CONFIG_FILE" ]; then
+  cp "$SHARED_CONFIG_FILE" "$HOME/.zshrc"
+  print_success "Shared configuration applied"
 else
-  print_warning "zsh-config.sh not found at $ZSH_CONFIG_FILE"
+  print_warning "Configuration files not found"
   print_warning "Skipping configuration copy"
 fi
 

@@ -1,6 +1,5 @@
 # Load shared zsh configuration
-SCRIPT_DIR="$(cd "$(dirname "${(%):-%x}")" && pwd)"
-source "$SCRIPT_DIR/../../shared/zsh-config.sh"
+source "$HOME/.zshrc-shared"
 
 # Ubuntu specific configurations
 
