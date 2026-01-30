@@ -76,6 +76,9 @@ jobs:
         run: |
           WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
           cd "$WSL_WORKSPACE/scripts/ubuntu"
+          # Set NVM architecture explicitly for GitHub Actions WSL environment
+          export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
+          export NVM_ARCH="x64"
           bash setup.sh
 
       - name: Verify installations
