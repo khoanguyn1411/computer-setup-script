@@ -9,8 +9,19 @@ print_header "INSTALLING ZSH & OH MY ZSH"
 
 ### Install Zsh & Oh My Zsh
 print_step "Installing Zsh..."
-sudo DEBIAN_FRONTEND=noninteractive apt update > /dev/null 2>&1
-sudo DEBIAN_FRONTEND=noninteractive apt install -y zsh git curl > /dev/null 2>&1
+
+# Wait for any existing apt processes to complete
+while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 ; do
+  print_info "Waiting for other package managers to finish..."
+  sleep 2
+done
+
+print_step "Updating package lists..."
+sudo DEBIAN_FRONTEND=noninteractive apt update -qq
+print_success "Package lists updated"
+
+print_step "Installing zsh, git, curl..."
+sudo DEBIAN_FRONTEND=noninteractive apt install -y zsh git curl -qq
 print_success "Zsh installed"
 
 if [ "$SHELL" != "$(which zsh)" ]; then
