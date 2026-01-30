@@ -51,11 +51,25 @@ fi
 ### Install Windsurf
 print_step "Installing Windsurf..."
 if ! command -v windsurf &> /dev/null; then
+  # Install dependencies first
+  sudo apt install -y wget ca-certificates > /dev/null 2>&1
+  
   # Download and install Windsurf
-  wget -qO windsurf.deb "https://windsurf-stable.codeiumdata.com/linux-x64/stable" 2>/dev/null
-  sudo apt install -y ./windsurf.deb > /dev/null 2>&1
-  rm -f windsurf.deb
-  print_success "Windsurf installed"
+  if wget -qO windsurf.deb "https://windsurf-stable.codeiumdata.com/linux-x64/stable" 2>/dev/null; then
+    # Install with fixed dependencies
+    sudo apt install -y -f ./windsurf.deb > /dev/null 2>&1
+    rm -f windsurf.deb
+    
+    if command -v windsurf &> /dev/null; then
+      print_success "Windsurf installed"
+    else
+      print_warning "Windsurf installation completed but command not found"
+      print_info "You may need to restart your session or check PATH"
+    fi
+  else
+    print_warning "Failed to download Windsurf"
+    print_info "You can install manually from: https://codeium.com/windsurf"
+  fi
 else
   print_info "Windsurf already installed"
 fi
