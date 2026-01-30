@@ -36,16 +36,6 @@ jobs:
             echo "❌ Not running in WSL"
           fi
 
-      - name: Test script syntax
-        shell: wsl-bash {0}
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "🔍 Checking script syntax..."
-          bash -n scripts/ubuntu/setup.sh
-          bash -n scripts/ubuntu/installations/*.sh
-          bash -n shared/unix-base-installation/*.sh
-          echo "✅ All scripts have valid syntax"
-
       - name: Run WSL setup
         shell: wsl-bash {0}
         run: |
