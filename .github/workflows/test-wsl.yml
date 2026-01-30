@@ -16,6 +16,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Configure Git line endings
+        run: git config --global core.autocrlf false
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -37,13 +40,6 @@ jobs:
           mkdir -p "$WSL_WORKSPACE"
           cp -r "$CURRENT_DIR" "$WSL_WORKSPACE/computer-setup-script"
           echo "Repository copied to: $WSL_WORKSPACE/computer-setup-script"
-
-          # Convert line endings from CRLF to LF
-          echo "Converting line endings to Unix format..."
-          find "$WSL_WORKSPACE/computer-setup-script" -type f \( -name "*.sh" -o -name "*.yml" -o -name "*.yaml" \) -exec dos2unix {} \; 2>/dev/null || \
-          find "$WSL_WORKSPACE/computer-setup-script" -type f \( -name "*.sh" -o -name "*.yml" -o -name "*.yaml" \) -exec sed -i 's/\r$//' {} \;
-
-          echo "Line endings converted"
           ls -la "$WSL_WORKSPACE/computer-setup-script"
 
       - name: Display WSL info
