@@ -29,6 +29,10 @@ jobs:
         run: |
           lsb_release -a
           echo "Shell: $SHELL"
+          echo "Current directory: $(pwd)"
+          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+          echo "Listing current directory:"
+          ls -la
           # Check if running in WSL
           if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
             echo "✅ Running in WSL"
@@ -36,15 +40,27 @@ jobs:
             echo "❌ Not running in WSL"
           fi
 
+      - name: Test script syntax
+        shell: wsl-bash {0}
+        run: |
+          cd "${GITHUB_WORKSPACE}"
+          echo "Working in: $(pwd)"
+          echo "🔍 Checking script syntax..."
+          bash -n scripts/ubuntu/setup.sh
+          bash -n scripts/ubuntu/installations/*.sh
+          bash -n shared/unix-base-installation/*.sh
+          echo "✅ All scripts have valid syntax"
+
       - name: Run WSL setup
         shell: wsl-bash {0}
         run: |
-          cd scripts/ubuntu
+          cd "${GITHUB_WORKSPACE}/scripts/ubuntu"
           bash setup.sh
 
       - name: Verify installations
         shell: wsl-bash {0}
         run: |
+          cd "${GITHUB_WORKSPACE}"
           echo "🔍 Verifying installations..."
 
           # Check Zsh and Oh My Zsh
@@ -132,6 +148,7 @@ jobs:
       - name: Display .zshrc contents
         shell: wsl-bash {0}
         run: |
+          cd "${GITHUB_WORKSPACE}"
           echo "📄 Contents of ~/.zshrc:"
           echo "====================================="
           cat ~/.zshrc
@@ -140,6 +157,7 @@ jobs:
       - name: Test Zsh configuration
         shell: wsl-bash {0}
         run: |
+          cd "${GITHUB_WORKSPACE}"
           source ~/.zshrc
           echo "✅ Zsh configuration loaded successfully"
 
