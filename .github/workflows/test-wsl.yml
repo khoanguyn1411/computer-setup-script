@@ -52,6 +52,23 @@ jobs:
           echo "Current directory: $(pwd)"
           echo "Listing current directory:"
           ls -la
+
+          # Check WSL version
+          echo ""
+          echo "WSL Version check:"
+          if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+            echo "WSL 2 detected"
+          else
+            echo "Likely WSL 1"
+          fi
+
+          # Alternative check
+          if grep -q "Microsoft" /proc/version && grep -q "WSL2" /proc/version; then
+            echo "WSL 2 (from kernel version)"
+          elif grep -q "Microsoft" /proc/version; then
+            echo "WSL 1 (from kernel version)"
+          fi
+
           # Check if running in WSL
           if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
             echo "✅ Running in WSL"
