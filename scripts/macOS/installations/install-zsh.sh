@@ -3,25 +3,9 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
-source "$SCRIPT_DIR/macOS/utils/colors.sh"
+source "$SCRIPT_DIR/../shared/colors.sh"
 
-print_header "INSTALLING ZSH & OH MY ZSH"
-
-### Install Zsh (macOS comes with Zsh by default)
-print_step "Checking Zsh installation..."
-if ! command -v zsh &> /dev/null; then
-  brew install zsh
-  print_success "Zsh installed"
-else
-  print_info "Zsh already installed"
-fi
-
-# Set Zsh as default shell if not already
-if [ "$SHELL" != "$(which zsh)" ]; then
-  print_step "Setting Zsh as default shell..."
-  chsh -s "$(which zsh)"
-  print_success "Zsh set as default shell"
-fi
+# Note: macOS uses Zsh as the default shell since Catalina (10.15)
 
 ### Install Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -61,4 +45,4 @@ else
   print_warning "Skipping configuration copy"
 fi
 
-print_done "Zsh installation complete!"
+print_done "Oh My Zsh installation complete!"

@@ -3,7 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")" 
-source "$SCRIPT_DIR/utils/colors.sh"
+source "$SCRIPT_DIR/../shared/colors.sh"
 
 print_header "INSTALLING IDEs (VSCODE, WINDSURF, ANTIGRAVITY)"
 
