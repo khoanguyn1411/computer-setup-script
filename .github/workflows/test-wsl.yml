@@ -39,7 +39,7 @@ jobs:
       - name: Test script syntax
         shell: wsl-bash {0}
         run: |
-          cd /mnt/c/Users/runneradmin/work/computer-setup-script/computer-setup-script
+          cd $GITHUB_WORKSPACE
           echo "🔍 Checking script syntax..."
           bash -n scripts/ubuntu/setup.sh
           bash -n scripts/ubuntu/installations/*.sh
@@ -49,7 +49,7 @@ jobs:
       - name: Run WSL setup
         shell: wsl-bash {0}
         run: |
-          cd /mnt/c/Users/runneradmin/work/computer-setup-script/computer-setup-script/scripts/ubuntu
+          cd $GITHUB_WORKSPACE/scripts/ubuntu
           bash setup.sh
 
       - name: Verify installations
