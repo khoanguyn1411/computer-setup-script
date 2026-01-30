@@ -93,6 +93,7 @@ ag [path]          # Open path in Antigravity (defaults to current directory)
 ```
 
 **Note:** These shortcuts automatically adapt based on your environment:
+
 - **Native Ubuntu**: Launches the IDE directly with the specified path
 - **WSL**: Opens the path using WSL remote connection features
 
@@ -109,15 +110,16 @@ brewup             # Update, upgrade, and cleanup
 ├── scripts/                  # Platform-specific setup scripts
 │   ├── ubuntu/               # Ubuntu/WSL2 setup
 │   │   ├── setup.sh          # Main setup script
-│   │   ├── zsh-config.sh     # Zsh configuration
+│   │   ├── zsh-config.sh     # Ubuntu-specific Zsh config
 │   │   ├── installations/    # Individual install scripts
-│   │   ├── launchers/        # WSL launcher scripts
-│   │   └── utils/            # Utility scripts (colors)
+│   │   └── launchers/        # WSL launcher scripts
 │   └── macOS/                # macOS setup
 │       ├── setup.sh          # Main setup script
-│       ├── zsh-config.sh     # Zsh configuration
-│       ├── installations/    # Individual install scripts
-│       └── utils/            # Utility scripts (colors)
+│       ├── zsh-config.sh     # macOS-specific Zsh config
+│       └── installations/    # Individual install scripts
+├── shared/                   # Shared configurations
+│   ├── zsh-config.sh         # Common Zsh configuration
+│   └── colors.sh             # Shared color utilities
 └── docs/                     # Documentation
     ├── Ubuntu.md             # Ubuntu/WSL2 guide
     └── MacOS.md              # macOS guide
@@ -127,9 +129,10 @@ brewup             # Update, upgrade, and cleanup
 
 Both Ubuntu and macOS setups are fully customizable:
 
-1. **Modify Zsh config** - Edit `scripts/ubuntu/zsh-config.sh` or `scripts/macOS/zsh-config.sh`
-2. **Add new scripts** - Create scripts in `installations/` folder
-3. **Adjust settings** - Modify individual installation scripts
+1. **Modify shared Zsh config** - Edit `shared/zsh-config.sh` for common aliases and functions
+2. **Modify OS-specific config** - Edit `scripts/ubuntu/zsh-config.sh` or `scripts/macOS/zsh-config.sh` for OS-specific settings
+3. **Add new scripts** - Create scripts in `installations/` folder
+4. **Adjust settings** - Modify individual installation scripts
 
 See platform-specific documentation for details:
 
