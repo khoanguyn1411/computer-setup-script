@@ -1,14 +1,15 @@
-name: Test WSL Setup
+name: Test WSL Setup (DISABLED)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "scripts/ubuntu/**"
-      - "shared/**"
-      - ".github/workflows/test-wsl.yml"
-  pull_request:
-    branches: [main]
+  # Workflow disabled - uncomment to re-enable
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "scripts/ubuntu/**"
+  #     - "shared/**"
+  #     - ".github/workflows/test-wsl.yml"
+  # pull_request:
+  #   branches: [main]
   workflow_dispatch:
 
 jobs:
