@@ -1,0 +1,159 @@
+name: Test WSL Setup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/ubuntu/**"
+      - "shared/**"
+      - ".github/workflows/test-wsl.yml"
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-wsl-setup:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup WSL
+        uses: Vampire/setup-wsl@v3
+        with:
+          distribution: Ubuntu-22.04
+
+      - name: Display WSL info
+        shell: wsl-bash {0}
+        run: |
+          lsb_release -a
+          echo "Shell: $SHELL"
+          # Check if running in WSL
+          if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
+            echo "✅ Running in WSL"
+          else
+            echo "❌ Not running in WSL"
+          fi
+
+      - name: Test script syntax
+        shell: wsl-bash {0}
+        run: |
+          cd /mnt/c/Users/runneradmin/work/computer-setup-script/computer-setup-script
+          echo "🔍 Checking script syntax..."
+          bash -n scripts/ubuntu/setup.sh
+          bash -n scripts/ubuntu/installations/*.sh
+          bash -n shared/unix-base-installation/*.sh
+          echo "✅ All scripts have valid syntax"
+
+      - name: Run WSL setup
+        shell: wsl-bash {0}
+        run: |
+          cd /mnt/c/Users/runneradmin/work/computer-setup-script/computer-setup-script/scripts/ubuntu
+          bash setup.sh
+
+      - name: Verify installations
+        shell: wsl-bash {0}
+        run: |
+          echo "🔍 Verifying installations..."
+
+          # Check Zsh and Oh My Zsh
+          if command -v zsh &> /dev/null; then
+            echo "✅ Zsh installed: $(zsh --version)"
+          else
+            echo "❌ Zsh not found"
+            exit 1
+          fi
+
+          if [ -d "$HOME/.oh-my-zsh" ]; then
+            echo "✅ Oh My Zsh installed"
+          else
+            echo "❌ Oh My Zsh not found"
+            exit 1
+          fi
+
+          # Check NVM and Node
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+          if command -v nvm &> /dev/null; then
+            echo "✅ NVM installed: $(nvm --version)"
+          else
+            echo "❌ NVM not found"
+            exit 1
+          fi
+
+          if command -v node &> /dev/null; then
+            echo "✅ Node.js installed: $(node --version)"
+          else
+            echo "❌ Node.js not found"
+            exit 1
+          fi
+
+          if command -v yarn &> /dev/null; then
+            echo "✅ Yarn installed: $(yarn --version)"
+          else
+            echo "❌ Yarn not found"
+            exit 1
+          fi
+
+          # Check Docker
+          if command -v docker &> /dev/null; then
+            echo "✅ Docker installed: $(docker --version)"
+          else
+            echo "❌ Docker not found"
+            exit 1
+          fi
+
+          # Check SSH key
+          if [ -f "$HOME/.ssh/personal" ]; then
+            echo "✅ SSH key generated"
+          else
+            echo "❌ SSH key not found"
+            exit 1
+          fi
+
+          # Check .zshrc
+          if [ -f "$HOME/.zshrc" ]; then
+            echo "✅ .zshrc created"
+          else
+            echo "❌ .zshrc not found"
+            exit 1
+          fi
+
+          # Check WSL launchers
+          if [ -f "$HOME/windsurf-launcher.sh" ]; then
+            echo "✅ Windsurf launcher created"
+          else
+            echo "❌ Windsurf launcher not found"
+            exit 1
+          fi
+
+          if [ -f "$HOME/antigravity-launcher.sh" ]; then
+            echo "✅ Antigravity launcher created"
+          else
+            echo "❌ Antigravity launcher not found"
+            exit 1
+          fi
+
+          echo ""
+          echo "🎉 All verifications passed!"
+
+      - name: Display .zshrc contents
+        shell: wsl-bash {0}
+        run: |
+          echo "📄 Contents of ~/.zshrc:"
+          echo "====================================="
+          cat ~/.zshrc
+          echo "====================================="
+
+      - name: Test Zsh configuration
+        shell: wsl-bash {0}
+        run: |
+          source ~/.zshrc
+          echo "✅ Zsh configuration loaded successfully"
+
+          # Test some aliases exist
+          alias gc &> /dev/null && echo "✅ Git aliases loaded" || echo "❌ Git aliases missing"
+          alias ns &> /dev/null && echo "✅ Node aliases loaded" || echo "❌ Node aliases missing"
+          alias wf &> /dev/null && echo "✅ WSL IDE shortcuts loaded" || echo "❌ WSL IDE shortcuts missing"
