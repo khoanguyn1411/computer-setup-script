@@ -5,6 +5,10 @@ set -e
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
 source "$SCRIPT_DIR/../../shared/colors.sh"
 
+print_header "INSTALLING OH MY ZSH"
+
+# Note: macOS uses Zsh as the default shell since Catalina (10.15)
+
 ### Install Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   print_step "Installing Oh My Zsh..."
@@ -34,7 +38,7 @@ print_success "Plugins installed (zsh-z, autosuggestions, syntax-highlighting)"
 print_step "Applying Zsh configuration..."
 
 SHARED_CONFIG_FILE="$SCRIPT_DIR/../../shared/zsh-config.sh"
-OS_CONFIG_FILE="$SCRIPT_DIR/macOS/zsh-config.sh"
+OS_CONFIG_FILE="$SCRIPT_DIR/zsh-config.sh"
 
 if [ -f "$SHARED_CONFIG_FILE" ] && [ -f "$OS_CONFIG_FILE" ]; then
   # Start with Homebrew initialization from macOS config

@@ -4,6 +4,9 @@ set -e
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
 source "$SCRIPT_DIR/../../shared/colors.sh"
+
+print_header "INSTALLING HOMEBREW"
+
 if ! command -v brew &> /dev/null; then
   print_step "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
