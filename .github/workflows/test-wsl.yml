@@ -73,12 +73,25 @@ jobs:
 
       - name: Run WSL setup
         shell: wsl-bash {0}
+        env:
+          NVM_NODEJS_ORG_MIRROR: https://nodejs.org/dist
+          NVM_ARCH: x64
         run: |
           WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
           cd "$WSL_WORKSPACE/scripts/ubuntu"
-          # Set NVM architecture explicitly for GitHub Actions WSL environment
+
+          # Debug: Check system architecture
+          echo "System info:"
+          uname -m
+          uname -a
+
+          # Ensure NVM env vars are set
           export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
-          export NVM_ARCH="x64"
+          export NVM_ARCH=x64
+
+          echo "NVM_ARCH: $NVM_ARCH"
+          echo "NVM_NODEJS_ORG_MIRROR: $NVM_NODEJS_ORG_MIRROR"
+
           bash setup.sh
 
       - name: Verify installations
