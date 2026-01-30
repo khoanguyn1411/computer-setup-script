@@ -37,6 +37,13 @@ jobs:
           mkdir -p "$WSL_WORKSPACE"
           cp -r "$CURRENT_DIR" "$WSL_WORKSPACE/computer-setup-script"
           echo "Repository copied to: $WSL_WORKSPACE/computer-setup-script"
+
+          # Convert line endings from CRLF to LF
+          echo "Converting line endings to Unix format..."
+          find "$WSL_WORKSPACE/computer-setup-script" -type f \( -name "*.sh" -o -name "*.yml" -o -name "*.yaml" \) -exec dos2unix {} \; 2>/dev/null || \
+          find "$WSL_WORKSPACE/computer-setup-script" -type f \( -name "*.sh" -o -name "*.yml" -o -name "*.yaml" \) -exec sed -i 's/\r$//' {} \;
+
+          echo "Line endings converted"
           ls -la "$WSL_WORKSPACE/computer-setup-script"
 
       - name: Display WSL info
@@ -62,6 +69,11 @@ jobs:
           WSL_WORKSPACE="/home/$(whoami)/workspace/computer-setup-script"
           cd "$WSL_WORKSPACE"
           echo "Working in: $(pwd)"
+          echo "🔍 Checking script syntax..."
+          bash -n scripts/ubuntu/setup.sh
+          bash -n scripts/ubuntu/installations/*.sh
+          bash -n shared/unix-base-installation/*.sh
+          echo "✅ All scripts have valid syntax"
 
       - name: Run WSL setup
         shell: wsl-bash {0}
