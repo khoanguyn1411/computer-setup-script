@@ -108,6 +108,13 @@ jobs:
           echo ""
           echo "🎉 All verifications passed!"
 
+      - name: Display .zshrc contents
+        run: |
+          echo "📄 Contents of ~/.zshrc:"
+          echo "====================================="
+          cat ~/.zshrc
+          echo "====================================="
+
       - name: Test Zsh configuration
         shell: zsh {0}
         run: |
