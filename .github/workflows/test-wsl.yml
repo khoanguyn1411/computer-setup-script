@@ -27,10 +27,15 @@ jobs:
       - name: Copy repository to WSL
         shell: wsl-bash {0}
         run: |
+          set -e
           # Copy from Windows path to WSL filesystem
+          # The current directory in WSL is the mounted Windows workspace
+          CURRENT_DIR="$(pwd)"
+          echo "Current directory (Windows mount): $CURRENT_DIR"
+
           WSL_WORKSPACE="/home/$(whoami)/workspace"
           mkdir -p "$WSL_WORKSPACE"
-          cp -r "${GITHUB_WORKSPACE}" "$WSL_WORKSPACE/computer-setup-script"
+          cp -r "$CURRENT_DIR" "$WSL_WORKSPACE/computer-setup-script"
           echo "Repository copied to: $WSL_WORKSPACE/computer-setup-script"
           ls -la "$WSL_WORKSPACE/computer-setup-script"
 
