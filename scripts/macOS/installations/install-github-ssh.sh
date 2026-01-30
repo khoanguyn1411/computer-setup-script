@@ -6,4 +6,4 @@ SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
 source "$SCRIPT_DIR/../../shared/colors.sh"
 
 # Use shared installation script
-source "$SCRIPT_DIR/../../shared/installations/install-github-ssh.sh"
+source "$SCRIPT_DIR/../../shared/unix-base-installation/install-github-ssh.sh"

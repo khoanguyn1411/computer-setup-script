@@ -11,4 +11,4 @@ sudo apt install -y libatomic1 > /dev/null 2>&1
 print_success "Dependencies installed"
 
 # Use shared installation script
-source "$SCRIPT_DIR/../../shared/installations/install-node.sh"
+source "$SCRIPT_DIR/../../shared/unix-base-installation/install-node.sh"
