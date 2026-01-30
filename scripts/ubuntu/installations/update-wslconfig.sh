@@ -3,7 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")" 
-source "$SCRIPT_DIR/../shared/colors.sh"
+source "$SCRIPT_DIR/../../shared/colors.sh"
 
 # Check if running in WSL
 if ! grep -qi microsoft /proc/version 2>/dev/null && [ -z "$WSL_DISTRO_NAME" ]; then

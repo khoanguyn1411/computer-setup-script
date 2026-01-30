@@ -5,7 +5,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 INSTALLATIONS_DIR="$SCRIPT_DIR/installations"
 
 # Load colors
-source "$SCRIPT_DIR/../shared/colors.sh"
+source "$SCRIPT_DIR/../../shared/colors.sh"
 
 print_header "DEV ENV SETUP (ZSH / NODE / DOCKER)"
 

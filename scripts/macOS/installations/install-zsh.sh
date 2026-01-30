@@ -3,9 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
-source "$SCRIPT_DIR/../shared/colors.sh"
-
-# Note: macOS uses Zsh as the default shell since Catalina (10.15)
+source "$SCRIPT_DIR/../../shared/colors.sh"
 
 ### Install Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then

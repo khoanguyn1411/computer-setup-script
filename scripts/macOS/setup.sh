@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 INSTALLATIONS_DIR="$SCRIPT_DIR/installations"
 
 # Load colors
-source "$SCRIPT_DIR/../shared/colors.sh"
+source "$SCRIPT_DIR/../../shared/colors.sh"
 
 print_header "DEV ENV SETUP FOR macOS"
 

@@ -3,9 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
-source "$SCRIPT_DIR/../shared/colors.sh"
-
-### Install NVM, Node, Yarn, Angular CLI
+source "$SCRIPT_DIR/../../shared/colors.sh"
 print_step "Installing NVM..."
 if [ ! -d "$HOME/.nvm" ]; then
   curl -fsSL https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash > /dev/null 2>&1

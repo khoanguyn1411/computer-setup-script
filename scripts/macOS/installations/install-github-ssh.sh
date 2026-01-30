@@ -3,9 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
-source "$SCRIPT_DIR/../shared/colors.sh"
-
-### GitHub SSH config
+source "$SCRIPT_DIR/../../shared/colors.sh"
 print_step "Setting up GitHub SSH config..."
 
 mkdir -p ~/.ssh

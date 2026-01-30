@@ -3,9 +3,7 @@ set -e
 
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(cd "$(dirname "$0")" && pwd)")")"
-source "$SCRIPT_DIR/../shared/colors.sh"
-
-### Install Docker Desktop for Mac
+source "$SCRIPT_DIR/../../shared/colors.sh"
 print_step "Checking Docker installation..."
 
 if ! command -v docker &> /dev/null; then
