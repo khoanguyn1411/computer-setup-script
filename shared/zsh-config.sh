@@ -151,6 +151,15 @@ function generatePersonalSshKey() {
     ssh-keygen -t ed25519 -C "khoaah1411@gmail.com" -f ~/.ssh/personal
 }
 
+function initGitRepo() {
+    git init
+    git remote add origin "$1"
+    git add .
+    git commit -m "Initial commit"
+    git branch -M main
+    git push -u origin main
+}
+
 # Node
 alias ns="npm start"
 
