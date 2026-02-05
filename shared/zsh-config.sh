@@ -140,6 +140,7 @@ function gitToPersonalProfile() {
 function gitSetupGlobalPersonalProfile() {
     git config --global user.name "khoanguyn1411"
     git config --global user.email "khoaah1411@gmail.com"
+    git config --global user.signingkey ~/.ssh/personal.pub
 }
 
 # function gitToSaritasaProfile() {
