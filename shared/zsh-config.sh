@@ -143,12 +143,6 @@ function gitSetupGlobalPersonalProfile() {
     git config --global user.signingkey ~/.ssh/personal.pub
 }
 
-# function gitToSaritasaProfile() {
-#     git config user.name "khoanguyen-saritasa"
-#     git config user.email "khoa.nguyen@saritasa.com"
-#     git config user.signingkey ~/.ssh/saritasa.pub
-# }
-
 function generateSshKey() {
     ssh-keygen -t ed25519 -C "$1" -f ~/.ssh/$2
 }
