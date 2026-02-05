@@ -33,6 +33,10 @@ function ag() {
 # Homebrew
 alias brewup="brew update && brew upgrade && brew cleanup"
 
+# Update Antigravity binary path
+export PATH="/Applications/Antigravity.app/Contents/Resources/app/bin:$PATH"
+
+# Auto update zsh configuration
 function zshUpdate() {
     local REPO_URL="https://github.com/khoanguyn1411/computer-setup-script.git"
     local TEMP_DIR=$(mktemp -d)
