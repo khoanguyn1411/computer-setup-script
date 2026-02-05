@@ -143,6 +143,30 @@ Edit `scripts/macOS/zsh-config.sh` with your preferences before running the inst
 
 ## 🔧 Useful Commands (from Zsh config)
 
+### Zsh Management
+
+- `zshConfig` - Open ~/.zshrc in VS Code
+- `zshRestart` - Reload Zsh configuration
+- `zshUpdate` - Auto-update Zsh config from GitHub repo
+- `zshHistoryFix` - Fix corrupted Zsh history
+
+#### zshUpdate - Keep Your Configuration Up-to-Date
+
+The `zshUpdate` command automatically pulls the latest configuration from your GitHub repository and updates your `~/.zshrc`:
+
+```bash
+zshUpdate
+```
+
+This will:
+1. Clone the latest version of your setup repository
+2. Combine shared and macOS-specific configurations
+3. Update your `~/.zshrc` file
+4. Reload your shell configuration
+5. Clean up temporary files
+
+No need to manually manage configuration files anymore!
+
 ### Git Aliases
 
 - `gc "message"` - Git commit with message
