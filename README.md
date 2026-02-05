@@ -149,11 +149,3 @@ For platform-specific troubleshooting:
 
 - [Ubuntu/WSL2 Troubleshooting](docs/Ubuntu.md#-troubleshooting)
 - [macOS Troubleshooting](docs/MacOS.md#-troubleshooting)
-
-## 📄 License
-
-MIT License - feel free to use and modify as needed.
-
-## 🤝 Contributing
-
-Feel free to submit issues or pull requests for improvements!
