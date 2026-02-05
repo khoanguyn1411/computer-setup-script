@@ -137,6 +137,10 @@ function gitToPersonalProfile() {
     git config user.signingkey ~/.ssh/personal.pub
 }
 
+function gitSetupGlobalPersonalProfile() {
+    git config --global user.name "khoanguyn1411"
+    git config --global user.email "khoaah1411@gmail.com"
+}
 
 # function gitToSaritasaProfile() {
 #     git config user.name "khoanguyen-saritasa"
@@ -156,7 +160,7 @@ function generatePersonalSshKey() {
 alias ns="npm start"
 
 # Python
-alias av="source venv/bin/activate"
+alias av="source .venv/bin/activate"
 alias py="python3"
 
 function pi() {
@@ -165,8 +169,8 @@ function pi() {
 }
 
 function initPython() {
-    python3 -m venv venv
-    source venv/bin/activate
+    python3 -m venv .venv
+    source .venv/bin/activate
 
     if [ -f requirements.txt ]; then
         echo "📦 Installing dependencies from requirements.txt"
