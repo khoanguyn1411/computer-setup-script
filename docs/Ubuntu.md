@@ -79,25 +79,10 @@ Installs Docker Engine, Docker CLI, and Docker Compose plugin. Adds your user to
 bash scripts/ubuntu/installations/install-ide.sh
 ```
 
-Installs VS Code, Windsurf, and Antigravity on native Ubuntu.
+Installs VS Code, Windsurf, and Antigravity on native Ubuntu. Launcher scripts are also created automatically on WSL systems.
 
-**For WSL users:** This script will skip installation and provide download links for Windows. IDEs should be installed on the Windows side and accessed via WSL remote features.
+**For WSL users:** This script will skip installation and provide download links for Windows. IDEs should be installed on the Windows side and accessed via WSL remote features. Launchers are configured automatically.
 
-### Setup Windsurf Launcher
-
-```bash
-bash scripts/ubuntu/installations/install-windsurf.sh
-```
-
-Creates a launcher script for opening folders in Windsurf via WSL remote connection.
-
-### Setup Antigravity Launcher
-
-```bash
-bash scripts/ubuntu/installations/install-antigravity.sh
-```
-
-Creates a launcher script for opening folders in Antigravity via WSL remote connection.
 
 ### Update WSL Config (WSL Only)
 
