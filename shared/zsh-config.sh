@@ -125,6 +125,8 @@ alias gckb="git checkout -b"
 alias sd="git fetch --all && git merge origin/develop"
 alias signCommit="git config commit.gpgsign true"
 
+alias sshConfig="code ~/.ssh/config" 
+
 function gacp() {
     git add .
     git commit -m "$1"
