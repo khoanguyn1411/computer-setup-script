@@ -29,6 +29,13 @@ Host github.com
     HostName github.com
     User khoanguyn1411
     IdentityFile ~/.ssh/personal
+
+# example custom host account
+# Host github.com-saritasa
+#     HostName github.com
+#     User khoanguyen-saritasa
+#     IdentityFile ~/.ssh/saritasa
+
 EOF
   print_success "SSH config updated"
 else
