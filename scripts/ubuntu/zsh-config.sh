@@ -66,13 +66,17 @@ function zshUpdate() {
         echo "🔄 Reloading shell configuration..."
         source "$HOME/.zshrc"
         echo "✨ Done! Your zsh is now up to date."
+        
+        # Clean up temp directory
+        echo "🧹 Cleaning up..."
+        rm -rf "$TEMP_DIR"
+        
+        # Restart zsh with new configuration
+        echo "🔄 Restarting zsh..."
+        exec zsh
     else
         echo "❌ Error: Failed to fetch repository from GitHub"
         rm -rf "$TEMP_DIR"
         return 1
     fi
-    
-    # Clean up temp directory
-    echo "🧹 Cleaning up..."
-    rm -rf "$TEMP_DIR"
 }
