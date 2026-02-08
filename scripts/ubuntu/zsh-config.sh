@@ -70,10 +70,6 @@ function zshUpdate() {
         # Clean up temp directory
         echo "🧹 Cleaning up..."
         rm -rf "$TEMP_DIR"
-        
-        # Restart zsh with new configuration
-        echo "🔄 Restarting zsh..."
-        exec zsh
     else
         echo "❌ Error: Failed to fetch repository from GitHub"
         rm -rf "$TEMP_DIR"
