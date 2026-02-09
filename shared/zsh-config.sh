@@ -195,5 +195,11 @@ function initPython() {
     fi
 }
 
+# Projects
+# Bunker
+alias startBunker="cd .. && bash ./local.dev.sh --enable-backend && cd frontend && ns"
+alias startBunkerDocker="bash ./local.dev.sh --enable-backend"
+alias stopBunkerDocker="docker compose -p bunker-local down"
+ 
 # Docker
 alias dockerCleanAll="docker system prune -a --volumes"
