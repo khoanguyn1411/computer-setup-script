@@ -200,6 +200,7 @@ function initPython() {
 alias startBunker="cd .. && bash ./local.dev.sh --enable-backend && cd frontend && ns"
 alias startBunkerDocker="bash ./local.dev.sh --enable-backend"
 alias stopBunkerDocker="docker compose -p bunker-local down"
+alias importBunkerDB="docker exec -i bunker-local-db mysql -u root -pdocker_root < .docker/dump.sql"
  
 # Docker
 alias dockerCleanAll="docker system prune -a --volumes"
