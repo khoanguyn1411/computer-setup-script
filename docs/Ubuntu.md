@@ -256,7 +256,7 @@ The shortcuts are automatically configured in your `~/.zshrc` when you run the s
    if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
        # WSL: Use launcher scripts
        alias wf="source ~/windsurf-launcher.sh"
-       alias ag="source ~/antigravity-launcher.sh;"
+       alias ag="source ~/antigravity-launcher.sh"
    else
        # Native Ubuntu: Launch applications directly
        function wf() {
