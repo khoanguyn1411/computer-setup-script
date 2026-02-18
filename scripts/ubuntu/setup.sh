@@ -49,10 +49,7 @@ fi
 bash "$INSTALLATIONS_DIR/install-cuda.sh"
 echo ""
 
-### 5. Install IDEs
-print_step "[5/5] Installing IDEs (VSCode, Windsurf, Antigravity)..."
-
-# Step number updated to [6/6]
+### 6. Install IDEs
 print_step "[6/6] Installing IDEs (VSCode, Windsurf, Antigravity)..."
 bash "$INSTALLATIONS_DIR/install-ide.sh"
 echo ""

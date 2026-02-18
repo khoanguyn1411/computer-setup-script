@@ -115,6 +115,13 @@ jobs:
             exit 1
           fi
 
+          # Check CUDA Toolkit
+          if command -v nvcc &> /dev/null; then
+            echo "✅ CUDA Toolkit installed: $(nvcc --version | tail -1)"
+          else
+            echo "⚠️  CUDA Toolkit not installed (skipped in local mode without GPU)"
+          fi
+
           echo ""
           echo "🎉 All verifications passed!"
 
