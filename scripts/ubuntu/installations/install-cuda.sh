@@ -10,16 +10,17 @@ source "$SCRIPT_DIR/../../../shared/colors.sh"
 
 print_header "NVIDIA CUDA TOOLKIT INSTALLATION"
 
-# Check for NVIDIA GPU
-print_step "Checking for NVIDIA GPU..."
-if command -v lspci &> /dev/null; then
-	if lspci | grep -i nvidia &> /dev/null; then
-		print_success "NVIDIA GPU detected"
-	else
-		print_warning "No NVIDIA GPU detected. CUDA installation may not be useful."
+# Check if we should skip CUDA installation in local mode without GPU
+if [ "$SETUP_ENV" != "ci" ]; then
+	print_info "Local mode detected. Checking for NVIDIA GPU..."
+	if ! command -v lspci &> /dev/null || ! lspci | grep -i nvidia &> /dev/null; then
+		print_warning "No NVIDIA GPU detected in local mode. Skipping CUDA installation."
+		echo ""
+		exit 0
 	fi
+	print_success "NVIDIA GPU detected. Proceeding with installation."
 else
-	print_warning "lspci not found. Skipping GPU check."
+	print_info "CI mode detected. Proceeding with CUDA installation."
 fi
 
 print_step "Starting CUDA Toolkit installation..."

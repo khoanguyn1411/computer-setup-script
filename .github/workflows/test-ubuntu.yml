@@ -10,6 +10,15 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      env:
+        description: 'Environment: local (run all) or ci (skip if no GPU)'
+        required: true
+        default: 'local'
+        type: choice
+        options:
+          - local
+          - ci
 
 jobs:
   test-ubuntu-setup:
@@ -33,6 +42,8 @@ jobs:
           echo "✅ All scripts have valid syntax"
 
       - name: Run Ubuntu setup
+        env:
+          SETUP_ENV: ${{ github.event.inputs.env || 'local' }}
         run: |
           cd scripts/ubuntu
           bash setup.sh
