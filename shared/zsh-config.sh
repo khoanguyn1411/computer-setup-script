@@ -154,19 +154,21 @@ function generatePersonalSshKey() {
 }
 
 function initGitRepo() {
+    # Create .gitignore if it doesn't exist
+    if [ ! -f .gitignore ]; then
+        if [ "$2" = "python" ]; then
+            echo ".venv" > .gitignore
+        else
+            touch .gitignore
+        fi
+    fi
+
     git init
     git remote add origin "$1"
     git add .
     git commit -m "Initial commit"
     git branch -M main
     git push -u origin main
-    
-    # Create .gitignore
-    if [ "$2" = "python" ]; then
-        echo ".venv" > .gitignore
-    else
-        touch .gitignore
-    fi
 }
 
 # Node
