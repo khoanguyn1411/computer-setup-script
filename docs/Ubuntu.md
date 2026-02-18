@@ -16,6 +16,7 @@ Automated development environment setup for Ubuntu and WSL2.
 - **Node.js & NVM** - Node Version Manager with the latest Node.js, Yarn, and Angular CLI
 - **GitHub SSH Keys** - SSH key generation and GitHub configuration
 - **Docker** - Docker Engine, CLI, and Docker Compose plugin
+- **NVIDIA CUDA Toolkit** - GPU acceleration framework (installed if NVIDIA GPU detected)
 - **IDEs** - VS Code, Windsurf, Antigravity (native Ubuntu only)
 - **IDE Launchers** - Windsurf and Antigravity WSL remote launchers (WSL only)
 - **WSL Optimization** - Memory and processor configuration (WSL only)
@@ -72,6 +73,29 @@ bash scripts/ubuntu/installations/install-docker.sh
 ```
 
 Installs Docker Engine, Docker CLI, and Docker Compose plugin. Adds your user to the docker group.
+
+### Install NVIDIA CUDA Toolkit
+
+```bash
+sudo bash scripts/ubuntu/installations/install-cuda.sh
+```
+
+Installs NVIDIA CUDA Toolkit for GPU-accelerated computing. The script:
+
+- **Detects NVIDIA GPU** - Checks if an NVIDIA GPU is available (if not present, warns but continues)
+- **Detects Environment** - Uses WSL-specific installation on WSL2, standard installation on native Ubuntu
+- **Dynamic Version Selection** - Automatically fetches and installs the latest CUDA Toolkit version available
+- **Environment Setup** - Adds CUDA to PATH and LD_LIBRARY_PATH in `~/.bashrc`
+
+**Requirements:**
+- NVIDIA GPU (optional - script works without but CUDA won't be useful)
+- `sudo` privileges
+- Internet connection
+
+**Verification:**
+```bash
+nvcc --version
+```
 
 ### Install IDEs (VSCode, Windsurf, Antigravity)
 

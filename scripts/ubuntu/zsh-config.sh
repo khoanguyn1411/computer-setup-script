@@ -1,5 +1,8 @@
 # Ubuntu specific configurations
 
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
 # IDE
 # Detect WSL vs native Ubuntu and configure IDE shortcuts accordingly
 if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then

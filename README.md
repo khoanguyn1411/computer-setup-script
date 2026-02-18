@@ -50,6 +50,7 @@ bash setup.sh
 - Node.js & NVM
 - GitHub SSH Keys
 - Docker Engine
+- NVIDIA CUDA Toolkit (if GPU detected)
 - IDE Launchers (Windsurf, Antigravity)
 - WSL Performance Optimization
 
