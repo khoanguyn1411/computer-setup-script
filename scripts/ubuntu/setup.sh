@@ -7,7 +7,18 @@ INSTALLATIONS_DIR="$SCRIPT_DIR/installations"
 # Load colors
 source "$SCRIPT_DIR/../../shared/colors.sh"
 
-print_header "DEV ENV SETUP (ZSH / NODE / DOCKER)"
+# Accept parameter: local (default) or ci
+SETUP_ENV="${1:-local}"
+if [ "$SETUP_ENV" != "local" ] && [ "$SETUP_ENV" != "ci" ]; then
+	print_error "Invalid parameter: $SETUP_ENV"
+	echo "Usage: $0 [local|ci]"
+	echo "  local (default): Skip CUDA if no GPU detected"
+	echo "  ci: Always install CUDA"
+	exit 1
+fi
+export SETUP_ENV
+
+print_header "DEV ENV SETUP (ZSH / NODE / DOCKER / CUDA)"
 
 ### 1. Install Zsh & Oh My Zsh
 print_step "[1/5] Installing Zsh & Oh My Zsh..."
@@ -29,8 +40,12 @@ print_step "[4/5] Installing Docker..."
 bash "$INSTALLATIONS_DIR/install-docker.sh"
 echo ""
 
-### 5. Install CUDA Toolkit (if NVIDIA GPU present)
-print_step "[5/6] Installing CUDA Toolkit (if NVIDIA GPU present)..."
+### 5. Install CUDA Toolkit
+if [ "$SETUP_ENV" = "ci" ]; then
+	print_step "[5/6] Installing CUDA Toolkit (CI mode - always install)..."
+else
+	print_step "[5/6] Installing CUDA Toolkit (local mode - skip if no GPU)..."
+fi
 bash "$INSTALLATIONS_DIR/install-cuda.sh"
 echo ""
 

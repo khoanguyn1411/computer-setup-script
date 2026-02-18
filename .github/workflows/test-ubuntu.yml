@@ -42,11 +42,10 @@ jobs:
           echo "✅ All scripts have valid syntax"
 
       - name: Run Ubuntu setup
-        env:
-          SETUP_ENV: ${{ github.event.inputs.env || 'local' }}
         run: |
           cd scripts/ubuntu
-          bash setup.sh
+          ENV_MODE="ci"
+          bash setup.sh "$ENV_MODE"
 
       - name: Verify installations
         run: |
