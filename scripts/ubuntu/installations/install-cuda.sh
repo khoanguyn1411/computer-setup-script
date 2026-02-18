@@ -6,7 +6,7 @@ set -e
 
 # Load colors for pretty printing
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-source "$SCRIPT_DIR/../../shared/colors.sh"
+source "$SCRIPT_DIR/../../../shared/colors.sh"
 
 print_header "NVIDIA CUDA TOOLKIT INSTALLATION"
 
