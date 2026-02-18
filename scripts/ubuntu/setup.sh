@@ -29,8 +29,16 @@ print_step "[4/5] Installing Docker..."
 bash "$INSTALLATIONS_DIR/install-docker.sh"
 echo ""
 
+### 5. Install CUDA Toolkit (if NVIDIA GPU present)
+print_step "[5/6] Installing CUDA Toolkit (if NVIDIA GPU present)..."
+bash "$INSTALLATIONS_DIR/install-cuda.sh"
+echo ""
+
 ### 5. Install IDEs
 print_step "[5/5] Installing IDEs (VSCode, Windsurf, Antigravity)..."
+
+# Step number updated to [6/6]
+print_step "[6/6] Installing IDEs (VSCode, Windsurf, Antigravity)..."
 bash "$INSTALLATIONS_DIR/install-ide.sh"
 echo ""
 
