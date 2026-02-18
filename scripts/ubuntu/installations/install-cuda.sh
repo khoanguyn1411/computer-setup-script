@@ -77,6 +77,21 @@ fi
 echo ""
 print_done "CUDA Toolkit installation complete!"
 echo ""
+# Check if /usr/local/cuda symlink is valid and print log
+if [ -L /usr/local/cuda ]; then
+    CUDA_LINK_TARGET=$(readlink -f /usr/local/cuda)
+    if [ -d "$CUDA_LINK_TARGET" ]; then
+        print_success "/usr/local/cuda symlink is valid. Points to: $CUDA_LINK_TARGET"
+    else
+        print_error "/usr/local/cuda symlink exists but target does not exist: $CUDA_LINK_TARGET"
+    fi
+    print_info "ls -l /usr/local/cuda: $(ls -l /usr/local/cuda)"
+else
+    print_error "/usr/local/cuda symlink does not exist. CUDA environment variables may not work."
+    print_info "ls -l /usr/local | grep cuda: $(ls -l /usr/local | grep cuda)"
+fi
+
+echo ""
 print_info "Next steps:"
 echo -e "  ${YELLOW}1.${NC}  Restart your terminal or run: ${CYAN}source ~/.zshrc${NC}"
 echo -e "  ${YELLOW}2.${NC}  Verify installation: ${CYAN}nvcc --version${NC}"
