@@ -67,6 +67,13 @@ else
 	sudo apt-get -y install cuda
 fi
 
+# Create symlink if not already present (ensures /usr/local/cuda exists)
+if [ ! -L /usr/local/cuda ] && [ -d /usr/local/cuda-* ]; then
+	CUDA_VERSION=$(ls -d /usr/local/cuda-* 2>/dev/null | tail -1 | xargs basename)
+	print_step "Creating symlink for CUDA: /usr/local/cuda -> /usr/local/$CUDA_VERSION"
+	sudo ln -sf /usr/local/$CUDA_VERSION /usr/local/cuda
+fi
+
 echo ""
 print_done "CUDA Toolkit installation complete!"
 echo ""
