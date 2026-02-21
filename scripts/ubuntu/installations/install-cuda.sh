@@ -52,43 +52,39 @@ if grep -qiE "microsoft|wsl" /proc/version; then
 else
 	print_info "Detected native Ubuntu environment. Using standard CUDA installation."
 	UBUNTU_VERSION=$(lsb_release -sr)
+	UBUNTU_VERSION_NO_DOT=$(echo "$UBUNTU_VERSION" | sed -e 's/\.//')
 	print_info "Detected Ubuntu version: $UBUNTU_VERSION"
 	
 	print_step "Updating package lists..."
 	sudo apt-get update
-	sudo apt-get install -y wget gnupg lsb-release
+	sudo apt-get install -y wget gnupg lsb-release jq
 	
-	print_step "Installing CUDA repository key..."
-	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu$(lsb_release -rs | sed -e 's/\.//')/x86_64/cuda-keyring_1.1-1_all.deb
-	sudo dpkg -i cuda-keyring_1.1-1_all.deb
+	print_step "Fetching latest CUDA repository package for Ubuntu $UBUNTU_VERSION..."
+	LATEST_CUDA_REPO=$(wget -qO- https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/ | grep -oP 'cuda-repo-ubuntu'${UBUNTU_VERSION_NO_DOT}'-\d+-\d+-local_[\d\.]+-[\d\.]+_amd64\.deb' | sort -V | tail -n1)
+	if [ -z "$LATEST_CUDA_REPO" ]; then
+		print_error "Could not determine latest CUDA repository package. Exiting."
+		exit 1
+	fi
+	print_info "Latest CUDA repository package: $LATEST_CUDA_REPO"
+	
+	# Extract CUDA version from package name (e.g., 13-1 from cuda-repo-ubuntu2204-13-1-local_...)
+	CUDA_VERSION=$(echo "$LATEST_CUDA_REPO" | grep -oP '(?<=ubuntu'${UBUNTU_VERSION_NO_DOT}'-)\d+-\d+')
+	print_info "Detected CUDA version: $CUDA_VERSION"
+	
+	print_step "Setting up CUDA repository pin..."
+	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/cuda-ubuntu${UBUNTU_VERSION_NO_DOT}.pin
+	sudo mv cuda-ubuntu${UBUNTU_VERSION_NO_DOT}.pin /etc/apt/preferences.d/cuda-repository-pin-600
+	
+	print_step "Downloading and installing CUDA repository deb package..."
+	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/$LATEST_CUDA_REPO
+	sudo dpkg -i $LATEST_CUDA_REPO
+	
+	print_step "Setting up CUDA keyring..."
+	sudo cp /var/cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-${CUDA_VERSION}-local/cuda-*-keyring.gpg /usr/share/keyrings/
 	
 	print_step "Updating package lists and installing CUDA Toolkit..."
 	sudo apt-get update
-	sudo apt-get -y install cuda
-fi
-
-# Create symlink if not already present (ensures /usr/local/cuda exists)
-if [ ! -L /usr/local/cuda ] && [ -d /usr/local/cuda-* ]; then
-	CUDA_VERSION=$(ls -d /usr/local/cuda-* 2>/dev/null | tail -1 | xargs basename)
-	print_step "Creating symlink for CUDA: /usr/local/cuda -> /usr/local/$CUDA_VERSION"
-	sudo ln -sf /usr/local/$CUDA_VERSION /usr/local/cuda
-fi
-
-echo ""
-print_done "CUDA Toolkit installation complete!"
-echo ""
-# Check if /usr/local/cuda symlink is valid and print log
-if [ -L /usr/local/cuda ]; then
-    CUDA_LINK_TARGET=$(readlink -f /usr/local/cuda)
-    if [ -d "$CUDA_LINK_TARGET" ]; then
-        print_success "/usr/local/cuda symlink is valid. Points to: $CUDA_LINK_TARGET"
-    else
-        print_error "/usr/local/cuda symlink exists but target does not exist: $CUDA_LINK_TARGET"
-    fi
-    print_info "ls -l /usr/local/cuda: $(ls -l /usr/local/cuda)"
-else
-    print_error "/usr/local/cuda symlink does not exist. CUDA environment variables may not work."
-    print_info "ls -l /usr/local | grep cuda: $(ls -l /usr/local | grep cuda)"
+	sudo apt-get -y install cuda-toolkit-${CUDA_VERSION}
 fi
 
 echo ""
