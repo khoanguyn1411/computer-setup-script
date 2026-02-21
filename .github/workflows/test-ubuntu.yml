@@ -51,6 +51,9 @@ jobs:
         run: |
           echo "🔍 Verifying installations..."
 
+          source ~/.zshrc
+          echo "✅ Zsh configuration loaded successfully"
+
           # Check Zsh and Oh My Zsh
           if command -v zsh &> /dev/null; then
             echo "✅ Zsh installed: $(zsh --version)"

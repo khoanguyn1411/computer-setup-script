@@ -41,6 +41,9 @@ jobs:
         run: |
           echo "🔍 Verifying installations..."
 
+          source ~/.zshrc
+          echo "✅ Zsh configuration loaded successfully"
+
           # Check Homebrew
           if command -v brew &> /dev/null; then
             echo "✅ Homebrew installed: $(brew --version | head -n1)"
