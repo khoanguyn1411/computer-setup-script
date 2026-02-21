@@ -149,11 +149,11 @@ function gitSetupGlobalPersonalProfile() {
 }
 
 function generateSshKey() {
-    ssh-keygen -t ed25519 -C "$1" -f ~/.ssh/$2
+    ssh-keygen -t rsa -b 4096 -C "$1" -f ~/.ssh/$2
 }
 
 function generatePersonalSshKey() {
-    ssh-keygen -t ed25519 -C "khoaah1411@gmail.com" -f ~/.ssh/personal
+    ssh-keygen -t rsa -b 4096 -C "khoaah1411@gmail.com" -f ~/.ssh/personal
 }
 
 function initGitRepo() {
