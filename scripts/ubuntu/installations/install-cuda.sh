@@ -25,6 +25,13 @@ fi
 
 print_step "Starting CUDA Toolkit installation..."
 
+# Set wget flags based on environment
+if [ "$SETUP_ENV" = "ci" ]; then
+	WGET_FLAGS="-q"
+else
+	WGET_FLAGS=""
+fi
+
 # Detect if running in WSL
 if grep -qiE "microsoft|wsl" /proc/version; then
 	print_info "Detected WSL environment. Using WSL-specific CUDA installation."
@@ -33,11 +40,11 @@ if grep -qiE "microsoft|wsl" /proc/version; then
 	sudo apt-get install -y wget gnupg lsb-release jq
 	
 	print_step "Setting up CUDA repository pin..."
-	wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
+	wget $WGET_FLAGS https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
 	sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
 	
 	print_step "Downloading and installing CUDA 13.1 repository deb package..."
-	wget https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda-repo-wsl-ubuntu-13-1-local_13.1.1-1_amd64.deb
+	wget $WGET_FLAGS https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda-repo-wsl-ubuntu-13-1-local_13.1.1-1_amd64.deb
 	sudo dpkg -i cuda-repo-wsl-ubuntu-13-1-local_13.1.1-1_amd64.deb
 	
 	print_step "Setting up CUDA keyring..."
@@ -60,11 +67,11 @@ else
 	sudo apt-get install -y wget gnupg lsb-release jq
 	
 	print_step "Setting up CUDA repository pin..."
-	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/cuda-ubuntu${UBUNTU_VERSION_NO_DOT}.pin
+	wget $WGET_FLAGS https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/cuda-ubuntu${UBUNTU_VERSION_NO_DOT}.pin
 	sudo mv cuda-ubuntu${UBUNTU_VERSION_NO_DOT}.pin /etc/apt/preferences.d/cuda-repository-pin-600
 	
 	print_step "Downloading and installing CUDA 13.1 repository deb package..."
-	wget https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local_13.1.1-590.48.01-1_amd64.deb
+	wget $WGET_FLAGS https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local_13.1.1-590.48.01-1_amd64.deb
 	sudo dpkg -i cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local_13.1.1-590.48.01-1_amd64.deb
 	
 	print_step "Setting up CUDA keyring..."
