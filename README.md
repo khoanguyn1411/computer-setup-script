@@ -5,11 +5,12 @@ Automated development environment setup scripts for **Ubuntu/WSL2** and **macOS*
 ## ✨ Features
 
 - 🎨 **Beautiful colored output** with progress indicators
-- 🔧 **Modular scripts** - run individually or all at once
+- 🔧 **Modular scripts** - run individually or all at once with reusable utilities
 - 🤖 **Automatic configuration** - Zsh config applied automatically
 - 🔒 **Safe updates** - Creates backups before modifying files
 - 🪟 **WSL optimization** - Automatic WSL config tuning (WSL only)
 - 🍎 **macOS support** - Homebrew-based setup for Mac users
+- 🛠️ **Complete dev environment** - All tools in one setup script
 
 ## � Documentation
 
@@ -51,6 +52,9 @@ bash setup.sh
 - GitHub SSH Keys
 - Docker Engine
 - NVIDIA CUDA Toolkit (if GPU detected)
+- Google Chrome
+- Build Tools (GCC, Make, CMake)
+- Audio Utilities (WSL only)
 - IDE Launchers (Windsurf, Antigravity)
 - WSL Performance Optimization
 
@@ -113,6 +117,17 @@ brewup             # Update, upgrade, and cleanup
 │   │   ├── setup.sh          # Main setup script
 │   │   ├── zsh-config.sh     # Ubuntu-specific Zsh config
 │   │   ├── installations/    # OS-specific install scripts
+│   │   │   ├── install-zsh.sh
+│   │   │   ├── install-node.sh
+│   │   │   ├── install-docker.sh
+│   │   │   ├── install-cuda.sh
+│   │   │   ├── install-ide.sh
+│   │   │   ├── install-chrome.sh
+│   │   │   ├── install-audio.sh
+│   │   │   ├── install-build-essential.sh
+│   │   │   ├── install-github-ssh.sh
+│   │   │   ├── update-wslconfig.sh
+│   │   │   └── ...
 │   │   └── launchers/        # WSL launcher scripts
 │   └── macOS/                # macOS setup
 │       ├── setup.sh          # Main setup script
@@ -121,6 +136,7 @@ brewup             # Update, upgrade, and cleanup
 ├── shared/                   # Shared configurations & scripts
 │   ├── zsh-config.sh         # Common Zsh configuration
 │   ├── colors.sh             # Shared color utilities
+│   ├── utils.sh              # Shared utility functions (is_wsl, is_ci, etc.)
 │   └── unix-base-installation/  # Common installation scripts
 │       ├── install-github-ssh.sh  # GitHub SSH setup
 │       └── install-node.sh   # Node.js/NVM setup
