@@ -6,6 +6,9 @@ SCRIPT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")"
 source "$SCRIPT_DIR/../../shared/colors.sh"
 source "$SCRIPT_DIR/../../shared/utils.sh"
 
+# Set non-interactive mode for apt
+export DEBIAN_FRONTEND=noninteractive
+
 print_header "INSTALLING IDEs (VSCODE, WINDSURF, ANTIGRAVITY)"
 
 # Check if running in WSL
@@ -42,7 +45,7 @@ if ! command -v code &> /dev/null; then
   rm -f packages.microsoft.gpg
   
   # Install VS Code
-  sudo apt update > /dev/null 2>&1
+  sudo apt-get update -y > /dev/null 2>&1
   sudo apt install -y code > /dev/null 2>&1
   print_success "VS Code installed"
 else
@@ -53,6 +56,7 @@ fi
 print_step "Installing Windsurf..."
 if ! command -v windsurf &> /dev/null; then
   # Install dependencies first
+  sudo apt-get update -y > /dev/null 2>&1
   sudo apt install -y wget ca-certificates > /dev/null 2>&1
   
   # Download and install Windsurf

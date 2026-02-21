@@ -4,6 +4,9 @@
 
 set -e
 
+# Set non-interactive mode for apt
+export DEBIAN_FRONTEND=noninteractive
+
 # Load colors for pretty printing
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 source "$SCRIPT_DIR/../../../shared/colors.sh"
@@ -16,7 +19,7 @@ if is_wsl; then
 	print_info "Detected WSL environment. Installing audio utilities..."
 	
 	print_step "Updating package lists..."
-	sudo apt update
+	sudo apt-get update -y
 	
 	print_step "Installing PulseAudio utilities..."
 	sudo apt install -y pulseaudio-utils

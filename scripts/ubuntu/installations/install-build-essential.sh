@@ -4,6 +4,9 @@
 
 set -e
 
+# Set non-interactive mode for apt
+export DEBIAN_FRONTEND=noninteractive
+
 # Load colors for pretty printing
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 source "$SCRIPT_DIR/../../../shared/colors.sh"
@@ -11,7 +14,7 @@ source "$SCRIPT_DIR/../../../shared/colors.sh"
 print_header "BUILD ESSENTIAL INSTALLATION"
 
 print_step "Updating package lists..."
-sudo apt-get update
+sudo apt-get update -y
 
 print_step "Installing build-essential..."
 sudo apt-get install -y build-essential

@@ -4,6 +4,9 @@
 
 set -e
 
+# Set non-interactive mode for apt
+export DEBIAN_FRONTEND=noninteractive
+
 # Load colors for pretty printing
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 source "$SCRIPT_DIR/../../../shared/colors.sh"
@@ -37,7 +40,7 @@ fi
 if is_wsl; then
 	print_info "Detected WSL environment. Using WSL-specific CUDA installation."
 	print_step "Updating package lists..."
-	sudo apt-get update
+	sudo apt-get update -y
 	sudo apt-get install -y wget gnupg lsb-release jq
 	
 	print_step "Setting up CUDA repository pin..."
@@ -49,10 +52,9 @@ if is_wsl; then
 	sudo dpkg -i cuda-repo-wsl-ubuntu-13-1-local_13.1.1-1_amd64.deb
 	
 	print_step "Setting up CUDA keyring..."
-	sudo cp /var/cuda-repo-wsl-ubuntu-13-1-local/cuda-*-keyring.gpg /usr/share/keyrings/
 	
 	print_step "Updating package lists and installing CUDA Toolkit 13.1..."
-	sudo apt-get update
+	sudo apt-get update -y
 	sudo apt-get -y install cuda-toolkit-13-1
 	
 	print_step "Cleaning up downloaded packages..."
@@ -64,7 +66,7 @@ else
 	print_info "Detected Ubuntu version: $UBUNTU_VERSION"
 	
 	print_step "Updating package lists..."
-	sudo apt-get update
+	sudo apt-get update -y
 	sudo apt-get install -y wget gnupg lsb-release jq
 	
 	print_step "Setting up CUDA repository pin..."
@@ -79,7 +81,7 @@ else
 	sudo cp /var/cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local/cuda-*-keyring.gpg /usr/share/keyrings/
 	
 	print_step "Updating package lists and installing CUDA Toolkit 13.1..."
-	sudo apt-get update
+	sudo apt-get update -y
 	sudo apt-get -y install cuda-toolkit-13-1
 	
 	print_step "Cleaning up downloaded packages..."

@@ -4,6 +4,9 @@
 
 set -e
 
+# Set non-interactive mode for apt
+export DEBIAN_FRONTEND=noninteractive
+
 # Load colors for pretty printing
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 source "$SCRIPT_DIR/../../../shared/colors.sh"
@@ -11,7 +14,7 @@ source "$SCRIPT_DIR/../../../shared/colors.sh"
 print_header "GOOGLE CHROME INSTALLATION"
 
 print_step "Updating package lists..."
-sudo apt-get update
+sudo apt-get update -y
 
 print_step "Installing dependencies..."
 sudo apt-get install -y wget gnupg lsb-release
@@ -21,7 +24,7 @@ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-ke
 echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
 
 print_step "Updating package lists with Chrome repository..."
-sudo apt-get update
+sudo apt-get update -y
 
 print_step "Installing Google Chrome..."
 sudo apt-get install -y google-chrome-stable
