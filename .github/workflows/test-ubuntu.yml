@@ -48,6 +48,7 @@ jobs:
           bash setup.sh "$ENV_MODE"
 
       - name: Verify installations
+        shell: zsh {0}
         run: |
           echo "🔍 Verifying installations..."
 
