@@ -42,16 +42,21 @@ echo ""
 
 ### 5. Install CUDA Toolkit
 if [ "$SETUP_ENV" = "ci" ]; then
-	print_step "[5/6] Installing CUDA Toolkit (CI mode - always install)..."
+	print_step "[5/7] Installing CUDA Toolkit (CI mode - always install)..."
 else
-	print_step "[5/6] Installing CUDA Toolkit (local mode - skip if no GPU)..."
+	print_step "[5/7] Installing CUDA Toolkit (local mode - skip if no GPU)..."
 fi
 bash "$INSTALLATIONS_DIR/install-cuda.sh"
 echo ""
 
 ### 6. Install IDEs
-print_step "[6/6] Installing IDEs (VSCode, Windsurf, Antigravity)..."
+print_step "[6/7] Installing IDEs (VSCode, Windsurf, Antigravity)..."
 bash "$INSTALLATIONS_DIR/install-ide.sh"
+echo ""
+
+### 7. Install Google Chrome
+print_step "[7/7] Installing Google Chrome..."
+bash "$INSTALLATIONS_DIR/install-chrome.sh"
 echo ""
 
 ### DONE
