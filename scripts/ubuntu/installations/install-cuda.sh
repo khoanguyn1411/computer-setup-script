@@ -35,20 +35,20 @@ if grep -qiE "microsoft|wsl" /proc/version; then
 	print_step "Setting up CUDA repository pin..."
 	wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
 	sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
-
-	print_step "Fetching latest CUDA Toolkit version for WSL..."
-	LATEST_TOOLKIT=$(wget -qO- https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/ | grep -oP 'cuda-toolkit-\d+-\d+_\d+\.\d+\.\d+-1_amd64.deb' | sort -V | tail -n1)
-	if [ -z "$LATEST_TOOLKIT" ]; then
-		print_error "Could not determine latest CUDA Toolkit version. Exiting."
-		exit 1
-	fi
-	print_info "Latest CUDA Toolkit package: $LATEST_TOOLKIT"
-	TOOLKIT_VERSION=$(echo "$LATEST_TOOLKIT" | grep -oP '(?<=cuda-toolkit-)\d+-\d+')
-	print_info "Installing cuda-toolkit-$TOOLKIT_VERSION"
-
-	print_step "Updating package lists and installing CUDA Toolkit..."
+	
+	print_step "Downloading and installing CUDA 13.1 repository deb package..."
+	wget https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda-repo-wsl-ubuntu-13-1-local_13.1.1-1_amd64.deb
+	sudo dpkg -i cuda-repo-wsl-ubuntu-13-1-local_13.1.1-1_amd64.deb
+	
+	print_step "Setting up CUDA keyring..."
+	sudo cp /var/cuda-repo-wsl-ubuntu-13-1-local/cuda-*-keyring.gpg /usr/share/keyrings/
+	
+	print_step "Updating package lists and installing CUDA Toolkit 13.1..."
 	sudo apt-get update
-	sudo apt-get -y install cuda-toolkit-$TOOLKIT_VERSION
+	sudo apt-get -y install cuda-toolkit-13-1
+	
+	print_step "Cleaning up downloaded packages..."
+	sudo rm cuda-repo-wsl-ubuntu-13-1-local_13.1.1-1_amd64.deb
 else
 	print_info "Detected native Ubuntu environment. Using standard CUDA installation."
 	UBUNTU_VERSION=$(lsb_release -sr)
@@ -59,32 +59,23 @@ else
 	sudo apt-get update
 	sudo apt-get install -y wget gnupg lsb-release jq
 	
-	print_step "Fetching latest CUDA repository package for Ubuntu $UBUNTU_VERSION..."
-	LATEST_CUDA_REPO=$(wget -qO- https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/ | grep -oP 'cuda-repo-ubuntu'${UBUNTU_VERSION_NO_DOT}'-\d+-\d+-local_[\d\.]+-[\d\.]+_amd64\.deb' | sort -V | tail -n1)
-	if [ -z "$LATEST_CUDA_REPO" ]; then
-		print_error "Could not determine latest CUDA repository package. Exiting."
-		exit 1
-	fi
-	print_info "Latest CUDA repository package: $LATEST_CUDA_REPO"
-	
-	# Extract CUDA version from package name (e.g., 13-1 from cuda-repo-ubuntu2204-13-1-local_...)
-	CUDA_VERSION=$(echo "$LATEST_CUDA_REPO" | grep -oP '(?<=ubuntu'${UBUNTU_VERSION_NO_DOT}'-)\d+-\d+')
-	print_info "Detected CUDA version: $CUDA_VERSION"
-	
 	print_step "Setting up CUDA repository pin..."
 	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/cuda-ubuntu${UBUNTU_VERSION_NO_DOT}.pin
 	sudo mv cuda-ubuntu${UBUNTU_VERSION_NO_DOT}.pin /etc/apt/preferences.d/cuda-repository-pin-600
 	
-	print_step "Downloading and installing CUDA repository deb package..."
-	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION_NO_DOT}/x86_64/$LATEST_CUDA_REPO
-	sudo dpkg -i $LATEST_CUDA_REPO
+	print_step "Downloading and installing CUDA 13.1 repository deb package..."
+	wget https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local_13.1.1-590.48.01-1_amd64.deb
+	sudo dpkg -i cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local_13.1.1-590.48.01-1_amd64.deb
 	
 	print_step "Setting up CUDA keyring..."
-	sudo cp /var/cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-${CUDA_VERSION}-local/cuda-*-keyring.gpg /usr/share/keyrings/
+	sudo cp /var/cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local/cuda-*-keyring.gpg /usr/share/keyrings/
 	
-	print_step "Updating package lists and installing CUDA Toolkit..."
+	print_step "Updating package lists and installing CUDA Toolkit 13.1..."
 	sudo apt-get update
-	sudo apt-get -y install cuda-toolkit-${CUDA_VERSION}
+	sudo apt-get -y install cuda-toolkit-13-1
+	
+	print_step "Cleaning up downloaded packages..."
+	sudo rm cuda-repo-ubuntu${UBUNTU_VERSION_NO_DOT}-13-1-local_13.1.1-590.48.01-1_amd64.deb
 fi
 
 echo ""
