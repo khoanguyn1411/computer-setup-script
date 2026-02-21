@@ -112,6 +112,25 @@ jobs:
             echo "⚠️  Google Chrome not installed (optional)"
           fi
 
+          # Check Build Tools
+          if command -v gcc &> /dev/null; then
+            echo "✅ GCC installed: $(gcc --version | head -n1)"
+          else
+            echo "⚠️  GCC not installed (install Xcode Command Line Tools)"
+          fi
+
+          if command -v make &> /dev/null; then
+            echo "✅ Make installed: $(make --version | head -n1)"
+          else
+            echo "⚠️  Make not installed (install Xcode Command Line Tools)"
+          fi
+
+          if command -v cmake &> /dev/null; then
+            echo "✅ CMake installed: $(cmake --version | head -n1)"
+          else
+            echo "⚠️  CMake not installed (optional)"
+          fi
+
           echo ""
           echo "🎉 All verifications passed!"
 

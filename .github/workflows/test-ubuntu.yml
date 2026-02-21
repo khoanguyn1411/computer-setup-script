@@ -134,6 +134,28 @@ jobs:
             exit 1
           fi
 
+          # Check Build Tools
+          if command -v gcc &> /dev/null; then
+            echo "✅ GCC installed: $(gcc --version | head -n1)"
+          else
+            echo "❌ GCC not found"
+            exit 1
+          fi
+
+          if command -v make &> /dev/null; then
+            echo "✅ Make installed: $(make --version | head -n1)"
+          else
+            echo "❌ Make not found"
+            exit 1
+          fi
+
+          if command -v cmake &> /dev/null; then
+            echo "✅ CMake installed: $(cmake --version | head -n1)"
+          else
+            echo "❌ CMake not found"
+            exit 1
+          fi
+
           echo ""
           echo "🎉 All verifications passed!"
 

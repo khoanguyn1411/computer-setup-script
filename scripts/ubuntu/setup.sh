@@ -19,50 +19,55 @@ if [ "$SETUP_ENV" != "local" ] && [ "$SETUP_ENV" != "ci" ]; then
 fi
 export SETUP_ENV
 
-print_header "DEV ENV SETUP (ZSH / NODE / DOCKER / CUDA)"
+print_header "DEV ENV SETUP (ZSH / NODE / DOCKER / CUDA / BUILD TOOLS)"
 
 ### 1. Install Zsh & Oh My Zsh
-print_step "[1/8] Installing Zsh & Oh My Zsh..."
+print_step "[1/9] Installing Zsh & Oh My Zsh..."
 bash "$INSTALLATIONS_DIR/install-zsh.sh"
 echo ""
 
 ### 2. Install NVM, Node, Yarn, Angular CLI
-print_step "[2/8] Installing Node.js environment..."
+print_step "[2/9] Installing Node.js environment..."
 bash "$INSTALLATIONS_DIR/install-node.sh"
 echo ""
 
 ### 3. GitHub SSH config
-print_step "[3/8] Setting up GitHub SSH..."
+print_step "[3/9] Setting up GitHub SSH..."
 bash "$INSTALLATIONS_DIR/install-github-ssh.sh"
 echo ""
 
 ### 4. Install Docker
-print_step "[4/8] Installing Docker..."
+print_step "[4/9] Installing Docker..."
 bash "$INSTALLATIONS_DIR/install-docker.sh"
 echo ""
 
 ### 5. Install CUDA Toolkit
 if is_ci; then
-	print_step "[5/8] Installing CUDA Toolkit (CI mode - always install)..."
+	print_step "[5/9] Installing CUDA Toolkit (CI mode - always install)..."
 else
-	print_step "[5/8] Installing CUDA Toolkit (local mode - skip if no GPU)..."
+	print_step "[5/9] Installing CUDA Toolkit (local mode - skip if no GPU)..."
 fi
 bash "$INSTALLATIONS_DIR/install-cuda.sh"
 echo ""
 
 ### 6. Install IDEs
-print_step "[6/8] Installing IDEs (VSCode, Windsurf, Antigravity)..."
+print_step "[6/9] Installing IDEs (VSCode, Windsurf, Antigravity)..."
 bash "$INSTALLATIONS_DIR/install-ide.sh"
 echo ""
 
 ### 7. Install Google Chrome
-print_step "[7/8] Installing Google Chrome..."
+print_step "[7/9] Installing Google Chrome..."
 bash "$INSTALLATIONS_DIR/install-chrome.sh"
 echo ""
 
 ### 8. Install Audio Utilities (WSL only)
-print_step "[8/8] Installing Audio Utilities (WSL only)..."
+print_step "[8/9] Installing Audio Utilities (WSL only)..."
 bash "$INSTALLATIONS_DIR/install-audio.sh"
+echo ""
+
+### 9. Install Build Tools
+print_step "[9/9] Installing Build Tools..."
+bash "$INSTALLATIONS_DIR/install-build-essential.sh"
 echo ""
 
 ### DONE
