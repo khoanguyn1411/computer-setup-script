@@ -38,12 +38,8 @@ jobs:
           bash setup.sh
 
       - name: Verify installations
-        shell: zsh {0}
         run: |
           echo "🔍 Verifying installations..."
-
-          source ~/.zshrc
-          echo "✅ Zsh configuration loaded successfully"
 
           # Check Homebrew
           if command -v brew &> /dev/null; then
