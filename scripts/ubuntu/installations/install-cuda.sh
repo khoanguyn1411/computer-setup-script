@@ -7,11 +7,12 @@ set -e
 # Load colors for pretty printing
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 source "$SCRIPT_DIR/../../../shared/colors.sh"
+source "$SCRIPT_DIR/../../../shared/utils.sh"
 
 print_header "NVIDIA CUDA TOOLKIT INSTALLATION"
 
 # Check if we should skip CUDA installation in local mode without GPU
-if [ "$SETUP_ENV" != "ci" ]; then
+if is_local; then
 	print_info "Local mode detected. Checking for NVIDIA GPU..."
 	if ! command -v lspci &> /dev/null || ! lspci | grep -i nvidia &> /dev/null; then
 		print_warning "No NVIDIA GPU detected in local mode. Skipping CUDA installation."
@@ -26,14 +27,14 @@ fi
 print_step "Starting CUDA Toolkit installation..."
 
 # Set wget flags based on environment
-if [ "$SETUP_ENV" = "ci" ]; then
+if is_ci; then
 	WGET_FLAGS="-q"
 else
 	WGET_FLAGS=""
 fi
 
 # Detect if running in WSL
-if grep -qiE "microsoft|wsl" /proc/version; then
+if is_wsl; then
 	print_info "Detected WSL environment. Using WSL-specific CUDA installation."
 	print_step "Updating package lists..."
 	sudo apt-get update

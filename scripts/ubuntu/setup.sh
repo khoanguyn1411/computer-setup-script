@@ -4,8 +4,9 @@ set -e
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 INSTALLATIONS_DIR="$SCRIPT_DIR/installations"
 
-# Load colors
+# Load colors and utilities
 source "$SCRIPT_DIR/../../shared/colors.sh"
+source "$SCRIPT_DIR/../../shared/utils.sh"
 
 # Accept parameter: local (default) or ci
 SETUP_ENV="${1:-local}"
@@ -21,42 +22,47 @@ export SETUP_ENV
 print_header "DEV ENV SETUP (ZSH / NODE / DOCKER / CUDA)"
 
 ### 1. Install Zsh & Oh My Zsh
-print_step "[1/5] Installing Zsh & Oh My Zsh..."
+print_step "[1/8] Installing Zsh & Oh My Zsh..."
 bash "$INSTALLATIONS_DIR/install-zsh.sh"
 echo ""
 
 ### 2. Install NVM, Node, Yarn, Angular CLI
-print_step "[2/5] Installing Node.js environment..."
+print_step "[2/8] Installing Node.js environment..."
 bash "$INSTALLATIONS_DIR/install-node.sh"
 echo ""
 
 ### 3. GitHub SSH config
-print_step "[3/5] Setting up GitHub SSH..."
+print_step "[3/8] Setting up GitHub SSH..."
 bash "$INSTALLATIONS_DIR/install-github-ssh.sh"
 echo ""
 
 ### 4. Install Docker
-print_step "[4/5] Installing Docker..."
+print_step "[4/8] Installing Docker..."
 bash "$INSTALLATIONS_DIR/install-docker.sh"
 echo ""
 
 ### 5. Install CUDA Toolkit
-if [ "$SETUP_ENV" = "ci" ]; then
-	print_step "[5/7] Installing CUDA Toolkit (CI mode - always install)..."
+if is_ci; then
+	print_step "[5/8] Installing CUDA Toolkit (CI mode - always install)..."
 else
-	print_step "[5/7] Installing CUDA Toolkit (local mode - skip if no GPU)..."
+	print_step "[5/8] Installing CUDA Toolkit (local mode - skip if no GPU)..."
 fi
 bash "$INSTALLATIONS_DIR/install-cuda.sh"
 echo ""
 
 ### 6. Install IDEs
-print_step "[6/7] Installing IDEs (VSCode, Windsurf, Antigravity)..."
+print_step "[6/8] Installing IDEs (VSCode, Windsurf, Antigravity)..."
 bash "$INSTALLATIONS_DIR/install-ide.sh"
 echo ""
 
 ### 7. Install Google Chrome
-print_step "[7/7] Installing Google Chrome..."
+print_step "[7/8] Installing Google Chrome..."
 bash "$INSTALLATIONS_DIR/install-chrome.sh"
+echo ""
+
+### 8. Install Audio Utilities (WSL only)
+print_step "[8/8] Installing Audio Utilities (WSL only)..."
+bash "$INSTALLATIONS_DIR/install-audio.sh"
 echo ""
 
 ### DONE

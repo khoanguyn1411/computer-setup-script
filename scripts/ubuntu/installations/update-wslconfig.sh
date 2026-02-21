@@ -4,9 +4,10 @@ set -e
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")" 
 source "$SCRIPT_DIR/../../shared/colors.sh"
+source "$SCRIPT_DIR/../../shared/utils.sh"
 
 # Check if running in WSL
-if ! grep -qi microsoft /proc/version 2>/dev/null && [ -z "$WSL_DISTRO_NAME" ]; then
+if is_not_wsl; then
   print_warning "This script is only for WSL environments"
   print_info "Skipping WSL config update (not running in WSL)"
   exit 0

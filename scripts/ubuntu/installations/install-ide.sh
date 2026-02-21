@@ -4,11 +4,12 @@ set -e
 # Load colors
 SCRIPT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")" 
 source "$SCRIPT_DIR/../../shared/colors.sh"
+source "$SCRIPT_DIR/../../shared/utils.sh"
 
 print_header "INSTALLING IDEs (VSCODE, WINDSURF, ANTIGRAVITY)"
 
 # Check if running in WSL
-if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
+if is_wsl; then
   print_warning "Running in WSL - IDEs should be installed on Windows"
   echo ""
   print_info "To install IDEs on Windows:"
@@ -88,7 +89,7 @@ print_done "IDE installation complete!"
 print_info "Launch IDEs from your application menu or terminal"
 
 # Setup launchers only in WSL
-if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSL_DISTRO_NAME" ]; then
+if is_wsl; then
   ### Setup Windsurf Launcher
   print_step "Creating Windsurf launcher..."
 
