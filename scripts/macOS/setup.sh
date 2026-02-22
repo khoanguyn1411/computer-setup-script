@@ -25,12 +25,17 @@ bash "$INSTALLATIONS_DIR/install-node.sh"
 echo ""
 
 ### 4. GitHub SSH config
-print_step "[4/5] Setting up GitHub SSH..."
+print_step "[4/6] Setting up GitHub SSH..."
 bash "$INSTALLATIONS_DIR/install-github-ssh.sh"
 echo ""
 
-### 5. Install Docker
-print_step "[5/5] Installing Docker..."
+### 5. Install Utility Applications
+print_step "[5/6] Installing Utility Applications..."
+bash "$INSTALLATIONS_DIR/install-utilities.sh"
+echo ""
+
+### 6. Install Docker
+print_step "[6/6] Installing Docker..."
 bash "$INSTALLATIONS_DIR/install-docker.sh"
 echo ""
 
