@@ -13,7 +13,7 @@ chmod 700 ~/.ssh
 
 if [ ! -f ~/.ssh/personal ]; then
   print_step "Generating SSH key: ~/.ssh/personal"
-  ssh-keygen -t ed25519 -f ~/.ssh/personal -C "khoaah1411@gmail.com" -N ""
+  ssh-keygen -t rsa -b 4096 -f ~/.ssh/personal -C "khoaah1411@gmail.com" -N ""
   print_success "SSH key generated"
 else
   print_info "SSH key already exists"
