@@ -27,14 +27,26 @@ WSLCONFIG_PATH="/mnt/c/Users/$WIN_USER/.wslconfig"
 
 print_step "Configuring WSL settings for user: $WIN_USER"
 
-# Detect available RAM and calculate 70%
-AVAILABLE_MEMORY_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+# Detect available RAM from Windows system and calculate 70%
+WIN_TOTAL_RAM_KB=$(cmd.exe /c "wmic os get TotalVisibleMemorySize" 2>/dev/null | tail -2)
+if [ -z "$WIN_TOTAL_RAM_KB" ] || [ "$WIN_TOTAL_RAM_KB" -eq 0 ]; then
+  print_warning "Could not detect Windows RAM, falling back to WSL memory info"
+  AVAILABLE_MEMORY_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+else
+  AVAILABLE_MEMORY_KB=$WIN_TOTAL_RAM_KB
+fi
 AVAILABLE_MEMORY_GB=$((AVAILABLE_MEMORY_KB / 1024 / 1024))
 WSL_MEMORY=$((AVAILABLE_MEMORY_GB * 70 / 100))
 WSL_MEMORY_WITH_UNIT="${WSL_MEMORY}GB"
 
-# Detect available processors
-WSL_PROCESSORS=$(nproc)
+# Detect available processors from Windows system
+WIN_PROCESSORS=$(cmd.exe /c "wmic cpu get NumberOfLogicalProcessors" 2>/dev/null | tail -2)
+if [ -z "$WIN_PROCESSORS" ] || [ "$WIN_PROCESSORS" -eq 0 ]; then
+  print_warning "Could not detect Windows processors, falling back to WSL processor count"
+  WSL_PROCESSORS=$(nproc)
+else
+  WSL_PROCESSORS=$WIN_PROCESSORS
+fi
 
 print_info "Detected system resources:"
 print_info "  Available RAM: ${AVAILABLE_MEMORY_GB}GB"
