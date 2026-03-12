@@ -27,6 +27,20 @@ WSLCONFIG_PATH="/mnt/c/Users/$WIN_USER/.wslconfig"
 
 print_step "Configuring WSL settings for user: $WIN_USER"
 
+# Detect available RAM and calculate 70%
+AVAILABLE_MEMORY_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+AVAILABLE_MEMORY_GB=$((AVAILABLE_MEMORY_KB / 1024 / 1024))
+WSL_MEMORY=$((AVAILABLE_MEMORY_GB * 70 / 100))
+WSL_MEMORY_WITH_UNIT="${WSL_MEMORY}GB"
+
+# Detect available processors
+WSL_PROCESSORS=$(nproc)
+
+print_info "Detected system resources:"
+print_info "  Available RAM: ${AVAILABLE_MEMORY_GB}GB"
+print_info "  Using for WSL (70%): ${WSL_MEMORY_WITH_UNIT}"
+print_info "  Available processors: ${WSL_PROCESSORS}"
+
 # Create backup if file exists
 if [ -f "$WSLCONFIG_PATH" ]; then
   BACKUP_PATH="${WSLCONFIG_PATH}.backup.$(date +%Y%m%d_%H%M%S)"
@@ -47,7 +61,7 @@ if echo "$EXISTING_CONTENT" | grep -q "^\[wsl2\]"; then
   print_step "Updating existing [wsl2] section..."
   
   # Use awk to update or add memory and processors
-  awk -v memory="32GB" -v processors="12" '
+  awk -v memory="$WSL_MEMORY_WITH_UNIT" -v processors="$WSL_PROCESSORS" '
     BEGIN { in_wsl2=0; memory_set=0; processors_set=0 }
     /^\[wsl2\]/ { in_wsl2=1; print; next }
     /^\[.*\]/ { 
@@ -75,16 +89,16 @@ else
       echo ""
     fi
     echo "[wsl2]"
-    echo "memory=32GB"
-    echo "processors=12"
+    echo "memory=$WSL_MEMORY_WITH_UNIT"
+    echo "processors=$WSL_PROCESSORS"
   } > "$WSLCONFIG_PATH"
 fi
 
 # Convert line endings to Windows format
 unix2dos "$WSLCONFIG_PATH" 2>/dev/null || sed -i 's/$/\r/' "$WSLCONFIG_PATH"
 
-print_success "memory=32GB"
-print_success "processors=12"
+print_success "memory=$WSL_MEMORY_WITH_UNIT"
+print_success "processors=$WSL_PROCESSORS"
 print_done "WSL config updated successfully!"
 echo ""
 print_warning "Restart WSL for changes to take effect:"
