@@ -105,13 +105,6 @@ jobs:
             exit 1
           fi
 
-          # Check Google Chrome
-          if command -v google-chrome &> /dev/null; then
-            echo "✅ Google Chrome installed: $(google-chrome --version)"
-          else
-            echo "⚠️  Google Chrome not installed (optional)"
-          fi
-
           # Check Build Tools
           if command -v gcc &> /dev/null; then
             echo "✅ GCC installed: $(gcc --version | head -n1)"
