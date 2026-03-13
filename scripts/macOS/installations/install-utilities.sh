@@ -57,6 +57,8 @@ brew install --cask chatgpt
 print_success "chatgpt"
 brew install --cask antigravity
 print_success "antigravity"
+brew install --cask notion
+print_success "notion"
 
 # Development Tools
 print_step "Installing Development Tools..."
